@@ -1,15 +1,43 @@
-for i,b in pairs(workspace.FE.Actions:GetChildren()) do
-    if b.Name == " " then
-    b:Destroy()
-end
-end
 
-for i,b in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
-    if b.Name == " " then
-    b:Destroy()
-end
-end
 
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local player = Players.LocalPlayer
+local gui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
+gui.ResetOnSpawn = false
+gui.Name = "BypassGUI"
+
+-- Create fullscreen frame
+local frame = Instance.new("Frame", gui)
+frame.Size = UDim2.new(1, 0, 1, 0)
+frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+frame.BackgroundTransparency = 1  -- start transparent
+
+-- Text label
+local text = Instance.new("TextLabel", frame)
+text.Size = UDim2.new(1, 0, 1, 0)
+text.BackgroundTransparency = 1
+text.TextColor3 = Color3.fromRGB(255, 255, 255)
+text.TextScaled = true
+text.Font = Enum.Font.GothamBlack
+text.TextTransparency = 1
+text.Text = "WAIT A SEC..."
+
+-- Fade in frame and text
+TweenService:Create(frame, TweenInfo.new(1), {BackgroundTransparency = 0}):Play()
+TweenService:Create(text, TweenInfo.new(1), {TextTransparency = 0}):Play()
+task.wait(3)
+
+-- Change message
+text.Text = "ATLANTIC.DEV IS BACK ????????????"
+
+-- Wait then fade out
+task.wait(2)
+TweenService:Create(frame, TweenInfo.new(1), {BackgroundTransparency = 1}):Play()
+TweenService:Create(text, TweenInfo.new(1), {TextTransparency = 1}):Play()
+
+task.wait(1)
+gui:Destroy()
 
 local a = workspace.FE.Actions
 
@@ -24,1149 +52,1531 @@ else
         "Anti-Cheat Updated! Send a photo of this Message in our Discord Server so we can fix it."
     )
 end
-local function isWeirdName(name)
-    return string.match(name, "^[a-zA-Z]+%-%d+%a*%-%d+%a*$") ~= nil
-end
-
-local function deleteWeirdRemoteEvents(parent)
-    for _, child in pairs(parent:GetChildren()) do
-        if child:IsA("RemoteEvent") and isWeirdName(child.Name) then
-            child:Destroy()
-        end
-        deleteWeirdRemoteEvents(child)
-    end
-end
-
-deleteWeirdRemoteEvents(game)
 
 
-local WindUI = loadstring(game:HttpGet(
-    "https://raw.githubusercontent.com/Footagesus/WindUI/main/dist/main.lua"
-))()
 
--- */  Window  /* --
-local Window = WindUI:CreateWindow({
-    Title = "Twistzz Script | TPS STREET SOCCER Premium V0.01",
-    Folder = "Twistzz Script",
-    IconSize = 22 * 2,
-    NewElements = true,
-    Size = UDim2.fromOffset(550, 500),
-    HideSearchBar = false,
+local Library = loadstring(game:HttpGet("https://pastefy.app/5m4S63wW/raw"))()
 
-    OpenButton = {
-        Title = "Atlantic.dev",
-        CornerRadius = UDim.new(1, 0),
-        StrokeThickness = 3,
+
+
+
+
+local Window = Library:Window({
+    Title = "Atlantic.Dev | TPS Low Unc Executors | By Twistzz",
+    Desc = "Yes ITS FINNALY BACK !!!",
+    Icon = 105059922903197,
+    Theme = "Blue",
+    Config = {
+        Keybind = Enum.KeyCode.K,
+        Size = UDim2.new(0, 600, 0, 500)
+    },
+    CloseUIButton = {
         Enabled = true,
-        Draggable = true,
-        OnlyMobile = false,
-        Scale = 1,
-
-        Color = ColorSequence.new(
-            Color3.fromHex("#0400ff"),
-            Color3.fromHex("#2f00ff")
-        )
-    },
-
-    Topbar = {
-        Height = 44,
-        ButtonsType = "Mac",
-    },
+        Text = "Atlantic.dev"
+    }
 })
 
 
-do
-    Window:Tag({
-        Title = "Join Discord For W Script" ,
-        Icon = "gamepad-2",
-        Color = Color3.fromHex("#0000FF")
-    })
+
+local SidebarLine = Instance.new("Frame")
+SidebarLine.Size = UDim2.new(0, 1, 1, 0)
+SidebarLine.Position = UDim2.new(0, 140, 0, 0) 
+SidebarLine.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+SidebarLine.BorderSizePixel = 0
+SidebarLine.ZIndex = 5
+SidebarLine.Name = "SidebarLine"
+SidebarLine.Parent = game:GetService("CoreGui") 
+
+
+local Tab1 = Window:Tab({Title = "Read", Icon = "badge-info"}) do
+
+    Tab1:Section({Title = "Read"})
+
+
+local CodeBlock = Tab1:Code({
+    Title = "Beta Version",
+    Code = "First time using this UI library.\nReport bugs: discord.gg/twistzzscripts"
+})
+
 end
 
-do
-    WindUI:AddTheme({
-        Name = "CosmicBlue",
-        
-        -- Core Colors
-        Accent = Color3.fromHex("#00FFFF"),         -- Bright Electric Blue for emphasis (links, highlights, active states)
-        Dialog = Color3.fromHex("#030A1F"),         -- Deepest Blue for dialogs/pop-ups
-        Outline = Color3.fromHex("#00FFFF"),        -- Matching accent for outlines
-        Text = Color3.fromHex("#E0E0E0"),           -- Light Gray for main text
-        Placeholder = Color3.fromHex("#A0A0A0"),    -- Neutral Gray for hints
-        Button = Color3.fromHex("#1A1A1A"),         -- Slightly lighter than ElementBackground for interactive buttons
-        Icon = Color3.fromHex("#66FFFF"),           -- Lighter Electric Blue for general icons
-        
-        -- Window & Main Background
-        WindowBackground = Color3.fromHex("#030A1F"), -- Very deep, dark blue for the main application background
-        
-        -- Top Bar
-        TopbarButtonIcon = Color3.fromHex("#66FFFF"),
-        TopbarTitle = Color3.fromHex("#E0E0E0"),
-        TopbarAuthor = Color3.fromHex("#A0A0A0"),
-        TopbarIcon = Color3.fromHex("#00FFFF"),
-        
-        -- Tabs
-        TabBackground = Color3.fromHex("#121212"),   -- Near-black background for the tab container
-        TabTitle = Color3.fromHex("#E0E0E0"),
-        TabIcon = Color3.fromHex("#66FFFF"),
-        
-        -- Elements (Buttons, Input Fields, Toggles)
-        ElementBackground = Color3.fromHex("#66FFFF"), -- **High Contrast Black/Dark Gray** - This makes all elements clearly visible
-        ElementTitle = Color3.fromHex("#E0E0E0"),
-        ElementDesc = Color3.fromHex("#AAAAAA"),      -- Muted description text
-        ElementIcon = Color3.fromHex("#66FFFF"),
-    })
 
-    WindUI:SetTheme("CosmicBlue")
-end
-local ST1 = Window:Section({
-    Title = "Read",
-})
+local Tab2 = Window:Tab({Title = "Reach Methods", Icon = "circle-user-round"}) do
 
-local M = Window:Section({
-    Title = "Main",
-})
+    Tab2:Section({Title = "Reach Method 1 [Recommand this one] [ADDED AUTO ENABLE BACK]"})
 
-local MI = Window:Section({
-    Title = "Misc",
-})
-
-local ST = Window:Section({
-    Title = "Settings",
-})
-    local Read = ST1:Tab({
-        Title = "Read",
-        Icon = "info",
-        IconColor = blue,
-    })
-
-        local R = M:Tab({
-        Title = "Reach",
-        Icon = "volleyball",
-        IconColor = blue,
-    })
-            local MS = M:Tab({
-        Title = "Mossing",
-        Icon = "user",
-        IconColor = blue,
-    })
-
-                local VS = M:Tab({
-        Title = "Volleying",
-        Icon = "footprints",
-        IconColor = blue,
-    })
-
-    
-                local RC = M:Tab({
-        Title = "Reacts",
-        Icon = "apple",
-        IconColor = blue,
-    })
-
-        
-                local P = MI:Tab({
-        Title = "Player",
-        Icon = "user-round-cog",
-        IconColor = blue,
-    })
-
-                    local PP = MI:Tab({
-        Title = "Ping & Performance",
-        Icon = "ethernet-port",
-        IconColor = blue,
-    })
-
-                        local H = MI:Tab({
-        Title = "Helpers",
-        Icon = "heart-handshake",
-        IconColor = blue,
-    })
-    
-                        local BM = MI:Tab({
-        Title = "Ball Modifications",
-        Icon = "pencil-off",
-        IconColor = blue,
-    })
-
-                            local FG = MI:Tab({
-        Title = "Gamepass",
-        Icon = "banknote-x",
-        IconColor = blue,
-    })
-
-                                local TL = MI:Tab({
-        Title = "Teleporting",
-        Icon = "bird",
-        IconColor = blue,
-    })
-
-                                    local SC = MI:Tab({
-        Title = "Sky Changer",
-        Icon = "cloud",
-        IconColor = blue,
-    })
-
-                                        local STT = ST:Tab({
-        Title = "Settings",
-        Icon = "settings",
-        IconColor = blue,
-    })
-
-
-    
-  ------------------------------------------------ READ TAB ----------------------------------------------
-    local InviteCode = "B6rMyJXg4m"
-            local DiscordServerParagraph = Read:Paragraph({
-            Title = "Important",
-            Desc = "This is the BETA version of this script, please join the Discord server to report any bugs or issues.",
-            Buttons = {
-                {
-                    Title = "Copy link",
-                    Icon = "link",
-                    Callback = function()
-                        setclipboard("https://discord.gg/" .. InviteCode)
-                    end
-                }
-            }
-        })
-        
-
-        
-  ------------------------------------------------ REACH TAB ----------------------------------------------
-local reachEnabled = false
-local reachDistance = 1
-local reachConnection
-
-      R:Section({
-        Title = [[Reach Legs (Normal) (Firetouchinterest)]],
-        TextSize = 18,
-        TextTransparency = .35,
-        FontWeight = Enum.FontWeight.Medium,
-    })
-    
-
-
-        R:Toggle({ Title = "Enable / Disable Reach (Firetouchinterest)",  Callback = function(Value) 
-reachEnabled = Value
-
-    if not Value and reachConnection then
-        reachConnection:Disconnect()
-        reachConnection = nil
-    end
-
-
-    if Value then
-        if reachConnection then reachConnection:Disconnect() end
-        reachConnection = game:GetService("RunService").RenderStepped:Connect(function()
-            local player = game.Players.LocalPlayer
-            local character = player and player.Character
-            local rootPart = character and character:FindFirstChild("HumanoidRootPart")
-            local humanoid = character and character:FindFirstChild("Humanoid")
-
-            if not (character and rootPart and humanoid) then return end
-
-            local tps = workspace:FindFirstChild("TPSSystem") and workspace.TPSSystem:FindFirstChild("TPS")
-            if not tps then return end
-
-            local distance = (rootPart.Position - tps.Position).Magnitude
-            if distance <= reachDistance then
-                local preferredFoot = game.Lighting:FindFirstChild(player.Name) and game.Lighting[player.Name]:FindFirstChild("PreferredFoot")
-                if preferredFoot then
-                    local limbName = (humanoid.RigType == Enum.HumanoidRigType.R6)
-                        and ((preferredFoot.Value == 1) and "Right Leg" or "Left Leg")
-                        or ((preferredFoot.Value == 1) and "RightLowerLeg" or "LeftLowerLeg")
-
-                    local limb = character:FindFirstChild(limbName)
-                    if limb then
-                        firetouchinterest(limb, tps, 0)
-                        firetouchinterest(limb, tps, 1)
-                    end
-                end
-            end
-        end)
-    end
-         end })
-
-
-    R:Slider({
-        Title = "Reach Size",
-        Desc = "The Size Of The Reach",
-        IsTooltip = true,
-        IsTextbox = false,
-        Width = 200,
-        Step = 0.1,
-        Value = {
-            Min = 1,
-            Max = 15,
-            Default = 1,
-        },
-        Callback = function(val)
-reachDistance = tonumber(val)
-
-
-        if reachConnection then
-            reachConnection:Disconnect()
-            reachConnection = nil
-        end
-
-        if reachEnabled then
-            reachConnection = game:GetService("RunService").RenderStepped:Connect(function()
-                local player = game.Players.LocalPlayer
-                local character = player and player.Character
-                local rootPart = character and character:FindFirstChild("HumanoidRootPart")
-                local humanoid = character and character:FindFirstChild("Humanoid")
-
-                if not (character and rootPart and humanoid) then return end
-
-                local tps = workspace:FindFirstChild("TPSSystem") and workspace.TPSSystem:FindFirstChild("TPS")
-                if not tps then return end
-
-                local distance = (rootPart.Position - tps.Position).Magnitude
-                if distance <= reachDistance then
-                    local preferredFoot = game.Lighting:FindFirstChild(player.Name) and game.Lighting[player.Name]:FindFirstChild("PreferredFoot")
-                    if preferredFoot then
-                        local limbName = (humanoid.RigType == Enum.HumanoidRigType.R6)
-                            and ((preferredFoot.Value == 1) and "Right Leg" or "Left Leg")
-                            or ((preferredFoot.Value == 1) and "RightLowerLeg" or "LeftLowerLeg")
-
-                        local limb = character:FindFirstChild(limbName)
-                        if limb then
-                            firetouchinterest(limb, tps, 0)
-                            firetouchinterest(limb, tps, 1)
-                        end
-                    end
-                end
-            end)
-        end
-        end
-    })
-    R:Space()
-
-          R:Section({
-        Title = [[Reach Legs (Editing Size)]],
-        TextSize = 18,
-        TextTransparency = .35,
-        FontWeight = Enum.FontWeight.Medium,
-    })
-    
-    R:Space()
-        R:Input({
-        Flag = "InputTest",
-        Title = "Legs Size (R6)",
-        Desc = "This reach method is supported by solara / xeno.   Minimum Size is 1 if your put 0 you cant move anumore.",
-        Value = "1",
-        Type = "Textarea", -- or "Textarea"
-        Placeholder = "Reach",
-        Callback = function(Value) 
-    game.Players.LocalPlayer.Character["Right Leg"].Size = Vector3.new(Value, 2, Value)
-    game.Players.LocalPlayer.Character["Left Leg"].Size = Vector3.new(Value, 2, Value)
-        game.Players.LocalPlayer.Character["Right Leg"].CanCollide = false
-    game.Players.LocalPlayer.Character["Left Leg"].CanCollide = false
-    game.Players.LocalPlayer.Character.HumanoidRootPart.Size = Vector3.new(Value,2,Value)
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CanCollide = false
-        end
-    })
-
-
-
-        R:Input({
-        Flag = "InputTest",
-        Title = "Legs Size (R15)",
-        Desc = "This reach method is supported by solara / xeno.   Minimum Size is 1 if your put 0 you cant move anymore.",
-        Value = "1",
-        Type = "Textarea", -- or "Textarea"
-        Placeholder = "Reach",
-        Callback = function(Value) 
-    game.Players.LocalPlayer.Character["RightLowerLeg"].Size = Vector3.new(Value, 2, Value)
-    game.Players.LocalPlayer.Character["LeftLowerLeg"].Size = Vector3.new(Value, 2, Value)
-        game.Players.LocalPlayer.Character["RightLowerLeg"].CanCollide = false
-    game.Players.LocalPlayer.Character["LeftLowerLeg"].CanCollide = false
-    game.Players.LocalPlayer.Character.HumanoidRootPart.Size = Vector3.new(Value,2,Value)
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CanCollide = false
-        end
-    })
-
-
-
-R:Button({
-    Title = "Fake legs (Appear Normal)",
-    Icon = "",
-    Justify = "Center",
-    Callback = function()
-        local player = game.Players.LocalPlayer
-        local character = player.Character or player.CharacterAdded:Wait()
-        local humanoid = character:WaitForChild("Humanoid")
-
-        if humanoid.RigType == Enum.HumanoidRigType.R6 then
-            WindUI:Notify({
-                Title = "Applied",
-                Desc = "",
-                Icon = "check",
-            })
-
-            -- Your original code, untouched
-            game.Players.LocalPlayer.Character["Right Leg"].Transparency = 1
-            game.Players.LocalPlayer.Character["Left Leg"].Transparency = 1
-
-            game.Players.LocalPlayer.Character["Left Leg"].Massless = true
-            LeftLegM = Instance.new("Part", game.Players.LocalPlayer.Character)
-            LeftLegM.Name = "Left Leg"
-            LeftLegM.CanCollide = false
-            LeftLegM.Color = game.Players.LocalPlayer.Character["Left Leg"].Color
-            LeftLegM.Size = Vector3.new(1, 2, 1)
-            LeftLegM.Locked = true
-            LeftLegM.Position = game.Players.LocalPlayer.Character["Left Leg"].Position
-
-            local Attachment = Instance.new("Attachment", LeftLegM)
-            Attachment.Name = "LeftFootAttachment"
-            Attachment.Position = Vector3.new(0, -1, 0)
-
-            local MotorHip = Instance.new("Motor6D", game.Players.LocalPlayer.Character.Torso)
-            MotorHip.Name = "Fake Left Hip"
-            MotorHip.C0 = CFrame.new(-1, -1, 0, 0, 0, -1, 0, 1, 0, 1, 0, 0)
-            MotorHip.C1 = CFrame.new(-0.5, 1, 0, 0, 0, -1, 0, 1, 0, 1, 0, 0)
-            MotorHip.CurrentAngle = 0
-            MotorHip.DesiredAngle = 0
-            MotorHip.MaxVelocity = 0.1
-            MotorHip.Part0 = game.Players.LocalPlayer.Character.Torso
-            MotorHip.Part1 = LeftLegM
-
-            game.Players.LocalPlayer.Character["Right Leg"].Massless = true
-            RightLegM = Instance.new("Part", game.Players.LocalPlayer.Character)
-            RightLegM.Name = "Right Leg"
-            RightLegM.CanCollide = false
-            RightLegM.Color = game.Players.LocalPlayer.Character["Right Leg"].Color
-            RightLegM.Size = Vector3.new(1, 2, 1)
-            RightLegM.Locked = true
-            RightLegM.Position = game.Players.LocalPlayer.Character["Right Leg"].Position
-
-            local Attachment = Instance.new("Attachment", RightLegM)
-            Attachment.Name = "RightFootAttachment"
-            Attachment.Position = Vector3.new(0, -1, 0)
-
-            local MotorHip = Instance.new("Motor6D", game.Players.LocalPlayer.Character.Torso)
-            MotorHip.Name = "Fake Right Hip"
-            MotorHip.C0 = CFrame.new(1, -1, 0, 0, 0, 1, 0, 1, -0, -1, 0, 0)
-            MotorHip.C1 = CFrame.new(0.5, 1, 0, 0, 0, 1, 0, 1, -0, -1, 0, 0)
-            MotorHip.CurrentAngle = 0
-            MotorHip.DesiredAngle = 0
-            MotorHip.MaxVelocity = 0.1
-            MotorHip.Part0 = game.Players.LocalPlayer.Character.Torso
-            MotorHip.Part1 = RightLegM
-
-        elseif humanoid.RigType == Enum.HumanoidRigType.R15 then
-            WindUI:Notify({
-                Title = "Applied",
-                Desc = "",
-                Icon = "check",
-            })
-
-            game.Players.LocalPlayer.Character["RightLowerLeg"].Transparency = 1
-            game.Players.LocalPlayer.Character["LeftLowerLeg"].Transparency = 1
-        end
-    end
-})
-local player = game.Players.LocalPlayer
+    --------------------------------------------------
+-- SERVICES
+--------------------------------------------------
+local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
-local Workspace = game:GetService("Workspace")
+local player = Players.LocalPlayer
 
-local headReachEnabled = false
-local headReachSize = Vector3.new(1, 1.5, 1)
-local headTransparency = 0.5
-local headOffset = Vector3.new(0, 0, 0) -- offset relative to Head
-local headBoxPart
-local headConnection
-
-local function updateHeadBox()
-    if headBoxPart then headBoxPart:Destroy() end
-    headBoxPart = Instance.new("Part")
-    headBoxPart.Size = headReachSize
-    headBoxPart.Transparency = headTransparency
-    headBoxPart.Anchored = true
-    headBoxPart.CanCollide = false
-    headBoxPart.Color = Color3.fromRGB(255, 105, 180) -- Pink color
-    headBoxPart.Material = Enum.Material.Neon -- Neon material
-    headBoxPart.Name = "HeadReachBox"
-    headBoxPart.Parent = Workspace
-end
-
-local function startHeadReach()
-    if not headReachEnabled then return end
-    if headConnection then headConnection:Disconnect() end
-    updateHeadBox()
-
-    headConnection = RunService.RenderStepped:Connect(function()
-        local character = player.Character
-        if not character then return end
-        local head = character:FindFirstChild("Head")
-        local tps = Workspace:FindFirstChild("TPSSystem") and Workspace.TPSSystem:FindFirstChild("TPS")
-        if not (head and tps) then return end
-
-        headBoxPart.CFrame = head.CFrame * CFrame.new(headOffset)
-
-        local boxCFrame, boxSize = headBoxPart.CFrame, headBoxPart.Size
-        local relative = boxCFrame:PointToObjectSpace(tps.Position)
-
-        if math.abs(relative.X) <= boxSize.X / 2 
-            and math.abs(relative.Y) <= boxSize.Y / 2 
-            and math.abs(relative.Z) <= boxSize.Z / 2 then
-            firetouchinterest(head, tps, 0)
-            firetouchinterest(head, tps, 1)
-        end
-    end)
-end
-
-local function stopHeadReach()
-    if headConnection then headConnection:Disconnect() end
-    if headBoxPart then headBoxPart:Destroy() end
-end
-
---------------------------------------------------------
--- UI WITH MS
---------------------------------------------------------
-
-MS:Toggle({
-    Flag = "EnableHeadReach",
-    Title = "Enable / Disable Moss & Head Reach",
-    Desc = "",
-    Default = false,
-    Callback = function(state)
-        headReachEnabled = state
-        if state then startHeadReach() else stopHeadReach() end
-    end
-})
-
--- X SLIDER
-MS:Slider({
-    Title = "Reach X",
-    Desc = "",
-    IsTooltip = false,
-    IsTextbox = false,
-    Width = 200,
-    Step = 1,
-    Value = { Min = 0, Max = 50, Default = 1 },
-    Callback = function(val)
-        headReachSize = Vector3.new(val, headReachSize.Y, headReachSize.Z)
-        if headReachEnabled then
-            updateHeadBox()
-        end
-    end
-})
-
--- Y SLIDER (with automatic offset)
-MS:Slider({
-    Title = "Reach Y",
-    Desc = "",
-    IsTooltip = false,
-    IsTextbox = false,
-    Width = 200,
-    Step = 1,
-    Value = { Min = 0, Max = 50, Default = 1.5 },
-    Callback = function(val)
-        headReachSize = Vector3.new(headReachSize.X, val, headReachSize.Z)
-        headOffset = Vector3.new(headOffset.X, val / 2.5, headOffset.Z)
-        if headReachEnabled then
-            updateHeadBox()
-        end
-    end
-})
-
--- Z SLIDER
-MS:Slider({
-    Title = "Reach Z",
-    Desc = "",
-    IsTooltip = false,
-    IsTextbox = false,
-    Width = 200,
-    Step = 1,
-    Value = { Min = 0, Max = 50, Default = 1 },
-    Callback = function(val)
-        headReachSize = Vector3.new(headReachSize.X, headReachSize.Y, val)
-        if headReachEnabled then
-            updateHeadBox()
-        end
-    end
-})
-
--- Appear Normal Toggle
-MS:Toggle({
-    Flag = "AppearNormal",
-    Title = "Appear Normal",
-    Desc = "",
-    Default = false,
-    Callback = function(v)
-        headTransparency = v and 1 or 0.5
-        if headReachEnabled and headBoxPart then
-            headBoxPart.Transparency = headTransparency
-        end
-    end
-})
-
-
---------------------------------------------------------
--- SECTION: Percentage
---------------------------------------------------------
-
-MS:Section({ Title = "Percentage" })
-
-MS:Toggle({
-    Flag = "EnablePercentage",
-    Title = "Enable / Disable Percentage",
-    Desc = "",
-    Default = false,
-    Callback = function(state)
-        usePercentage = state
-        if state then
-            local size = percentageValue * 0.1
-            headReachSize = getAdjustedSize(size, headReachSize.Y, size)
-            updateHeadOffset()
-            startHeadReach()
-        end
-    end
-})
-
-MS:Slider({
-    Title = "Percentage",
-    Desc = "",
-    Width = 200,
-    Step = 1,
-    Value = { Min = 1, Max = 100, Default = 1 },
-    Callback = function(value)
-        percentageValue = value
-        if usePercentage then
-            local size = value * 0.1
-            headReachSize = getAdjustedSize(size, headReachSize.Y, size)
-            updateHeadOffset()
-            startHeadReach()
-        end
-    end
-})
-
-
---------------------------------------------------------
--- SECTION: Moss Configs
---------------------------------------------------------
-
-MS:Section({ Title = "Moss Configs" })
-
-local function createMossReachButton(title, percentage)
-    MS:Button({
-        Title = title,
-        Justify = "Center",
-        Callback = function()
-            local size = percentage * 0.2
-            headReachSize = getAdjustedSize(size, headReachSize.Y, size)
-            updateHeadOffset()
-            startHeadReach()
-        end
-    })
-end
-
-for percent = 25, 100, 5 do
-    createMossReachButton("Moss " .. percent .. "%", percent)
-end
-
-
-
-          VS:Section({
-        Title = [[Volley Reach]],
-        TextSize = 18,
-        TextTransparency = .35,
-        FontWeight = Enum.FontWeight.Medium,
-    })
-    
-
-local player = game.Players.LocalPlayer
-local RunService = game:GetService("RunService")
-
--- Default values
+--------------------------------------------------
+-- VARIABLES
+--------------------------------------------------
 local reachEnabled = false
+local shouldReEnable = false
+local selectedLegName = "Right Leg"
 local reachDistance = 10
-local reachConnection = nil
-local volleyPart = nil -- Will be set based on team selection
-local insideVolley = false
+local currentConnection = nil
+local storedHip = nil
 
--- Function to check if player is inside volley part
-local function checkInsideZone()
-    if not volleyPart then return false end
-    local char = player.Character
-    local root = char and char:FindFirstChild("HumanoidRootPart")
-    if not root then return false end
+--------------------------------------------------
+-- ENABLE REACH
+--------------------------------------------------
+local function enableReach()
+    if reachEnabled then return end
+    reachEnabled = true
+    shouldReEnable = true
 
-    local pos = root.Position
-    local min = volleyPart.Position - (volleyPart.Size / 2)
-    local max = volleyPart.Position + (volleyPart.Size / 2)
+    local character = player.Character or player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+    local leg = character:WaitForChild(selectedLegName)
 
-    return pos.X >= min.X and pos.X <= max.X and
-           pos.Y >= min.Y and pos.Y <= max.Y and
-           pos.Z >= min.Z and pos.Z <= max.Z
-end
-
--- Function to start reach loop
-local function startReachLoop()
-    if reachConnection then
-        reachConnection:Disconnect()
-        reachConnection = nil
+    -- hide legs (visual only)
+    if character:FindFirstChild("Right Leg") then
+        character["Right Leg"].Transparency = 1
+    end
+    if character:FindFirstChild("Left Leg") then
+        character["Left Leg"].Transparency = 1
     end
 
-    if not reachEnabled or not volleyPart then return end
+    -- disable hip safely
+    storedHip = character:FindFirstChild(
+        selectedLegName == "Right Leg" and "Right Hip" or "Left Hip",
+        true
+    )
+    if storedHip then
+        storedHip.Enabled = false
+    end
 
-    reachConnection = RunService.RenderStepped:Connect(function()
-        insideVolley = checkInsideZone()
-        if not insideVolley then return end -- only reach inside zone
+    currentConnection = RunService.RenderStepped:Connect(function()
+        local TPSSystem = workspace:FindFirstChild("TPSSystem")
+        local TPS = TPSSystem and TPSSystem:FindFirstChild("TPS")
+        if not TPS or not hrp or not leg then return end
 
-        local character = player.Character
-        local rootPart = character and character:FindFirstChild("HumanoidRootPart")
-        local humanoid = character and character:FindFirstChild("Humanoid")
-        if not (character and rootPart and humanoid) then return end
+        local direction = TPS.Position - hrp.Position
+        local distance = direction.Magnitude
 
-        local tps = workspace:FindFirstChild("TPSSystem") and workspace.TPSSystem:FindFirstChild("TPS")
-        if not tps then return end
-
-        local distance = (rootPart.Position - tps.Position).Magnitude
         if distance <= reachDistance then
-            local prefFolder = game.Lighting:FindFirstChild(player.Name)
-            local preferredFoot = prefFolder and prefFolder:FindFirstChild("PreferredFoot")
-            if not preferredFoot then return end
-
-            local limbName
-            if humanoid.RigType == Enum.HumanoidRigType.R6 then
-                limbName = (preferredFoot.Value == 1) and "Right Leg" or "Left Leg"
-            else
-                limbName = (preferredFoot.Value == 1) and "RightLowerLeg" or "LeftLowerLeg"
-            end
-
-            local limb = character:FindFirstChild(limbName)
-            if limb then
-                firetouchinterest(limb, tps, 0)
-                firetouchinterest(limb, tps, 1)
-            end
+            leg.CFrame = TPS.CFrame
+        else
+            leg.CFrame = CFrame.new(hrp.Position + direction.Unit * reachDistance)
         end
     end)
 end
 
--- Loop to continuously update insideVolley state
-task.spawn(function()
-    while true do
-        task.wait(0.1)
-        insideVolley = checkInsideZone()
+--------------------------------------------------
+-- DISABLE REACH
+--------------------------------------------------
+local function disableReach()
+    reachEnabled = false
+    shouldReEnable = false
+
+    if currentConnection then
+        currentConnection:Disconnect()
+        currentConnection = nil
+    end
+
+    local character = player.Character
+    if character then
+        if character:FindFirstChild("Right Leg") then
+            character["Right Leg"].Transparency = 0
+        end
+        if character:FindFirstChild("Left Leg") then
+            character["Left Leg"].Transparency = 0
+        end
+    end
+
+    if storedHip then
+        storedHip.Enabled = true
+        storedHip = nil
+    end
+end
+
+--------------------------------------------------
+-- AUTO RE-ENABLE ON RESET
+--------------------------------------------------
+player.CharacterAdded:Connect(function()
+    reachEnabled = false
+    storedHip = nil
+
+    if currentConnection then
+        currentConnection:Disconnect()
+        currentConnection = nil
+    end
+
+    if shouldReEnable then
+        task.wait(0.25) -- let character load
+        
+            local character = player.Character or player.CharacterAdded:Wait()
+            local humanoid = character:WaitForChild("Humanoid")
+
+            if humanoid.RigType == Enum.HumanoidRigType.R6 then
+            local character = player.Character or player.CharacterAdded:Wait()
+            local humanoid = character:WaitForChild("Humanoid")
+                character["Right Leg"].Transparency = 1
+                character["Left Leg"].Transparency = 1
+
+                character["Left Leg"].Massless = true
+                local LeftLegM = Instance.new("Part", character)
+                LeftLegM.Name = "Left Leg"
+                LeftLegM.CanCollide = false
+                LeftLegM.Color = character["Left Leg"].Color
+                LeftLegM.Size = Vector3.new(1,2,1)
+                LeftLegM.Locked = true
+                LeftLegM.Position = character["Left Leg"].Position
+
+                local Attachment = Instance.new("Attachment", LeftLegM)
+                Attachment.Name = "LeftFootAttachment"
+                Attachment.Position = Vector3.new(0,-1,0)
+
+                local MotorHip = Instance.new("Motor6D", character.Torso)
+                MotorHip.Name = "Fake Left Hip"
+                MotorHip.C0 = CFrame.new(-1,-1,0,0,0,-1,0,1,0,1,0,0)
+                MotorHip.C1 = CFrame.new(-0.5,1,0,0,0,-1,0,1,0,1,0,0)
+                MotorHip.MaxVelocity = 0.1
+                MotorHip.Part0 = character.Torso
+                MotorHip.Part1 = LeftLegM
+
+                character["Right Leg"].Massless = true
+                local RightLegM = Instance.new("Part", character)
+                RightLegM.Name = "Right Leg"
+                RightLegM.CanCollide = false
+                RightLegM.Color = character["Right Leg"].Color
+                RightLegM.Size = Vector3.new(1,2,1)
+                RightLegM.Locked = true
+                RightLegM.Position = character["Right Leg"].Position
+
+                local Attachment2 = Instance.new("Attachment", RightLegM)
+                Attachment2.Name = "RightFootAttachment"
+                Attachment2.Position = Vector3.new(0,-1,0)
+
+                local MotorHip2 = Instance.new("Motor6D", character.Torso)
+                MotorHip2.Name = "Fake Right Hip"
+                MotorHip2.C0 = CFrame.new(1,-1,0,0,0,1,0,1,0,-1,0,0)
+                MotorHip2.C1 = CFrame.new(0.5,1,0,0,0,1,0,1,0,-1,0,0)
+                MotorHip2.MaxVelocity = 0.1
+                MotorHip2.Part0 = character.Torso
+                MotorHip2.Part1 = RightLegM
+
+            end
+        
+        enableReach()
     end
 end)
 
-local S = VS:Paragraph({
-    Title = "What is Volley Reach",
-    Desc = "Volley Reach only activates when you are inside the box. Please make sure to select your team before enabling it, so the reach is applied to the correct box."
-})
-
-
--- ==== UI ====
-VS:Button({
-    Title = "Blue Team",
-    Icon = "",
-    Justify = "Center",
-    Callback = function()
-        volleyPart = workspace.GKSystem:FindFirstChild("Fix1")
-        if volleyPart then
-            volleyPart.Size = Vector3.new(85, 15.479999542236328, 34.80000305175781)
+--------------------------------------------------
+-- GUI
+--------------------------------------------------
+Tab2:Toggle({
+    Title = "Enable / Disable Reach",
+    Desc = "Recommended to use this reach method.",
+    Value = false,
+    Callback = function(v)
+        if v then
+            enableReach()
+        else
+            disableReach()
         end
-
     end
 })
 
-VS:Button({
-    Title = "Red Team",
-    Icon = "",
-    Justify = "Center",
+Tab2:Slider({
+    Title = "Reach Size",
+    Min = 1,
+    Max = 25,
+    Rounding = 0,
+    Value = reachDistance,
+    Callback = function(val)
+        reachDistance = val
+    end
+})
+
+
+
+Tab2:Button({
+    Title = "Fake Legs",
+    Desc = "Using this your legs will appear normal.",
     Callback = function()
-        volleyPart = workspace.GKSystem:FindFirstChild("Fix2")
-        if volleyPart then
-            volleyPart.Size = Vector3.new(85, 15.479999542236328, 34.80000305175781)
-        end
-
-    end
-})
-
-VS:Toggle({
-    Flag = "Enable / Disable Volley Reach",
-    Title = "Enable / Disable Volley Reach",
-    Desc = "Enable or disable volley reach when in zone",
-    Default = false,
-    Callback = function(state)
-        reachEnabled = state
-        startReachLoop()
-    end
-})
-
-VS:Slider({
-    Title = "Volley Reach Size",
-    Desc = "Adjust your reach distance",
-    IsTooltip = true,
-    IsTextbox = false,
-    Width = 200,
-    Step = 1,
-    Value = {
-        Min = 0,
-        Max = 15,
-        Default = 1,
-    },
-    Callback = function(value)
-        reachDistance = value
-    end
-})
-
-
-          VS:Section({
-        Title = [[Volleying Reacts (More Soon...)]],
-        TextSize = 18,
-        TextTransparency = .35,
-        FontWeight = Enum.FontWeight.Medium,
-    })
     
-local player = game.Players.LocalPlayer
+
+            local character = player.Character or player.CharacterAdded:Wait()
+            local humanoid = character:WaitForChild("Humanoid")
+
+            if humanoid.RigType == Enum.HumanoidRigType.R6 then
+            local character = player.Character or player.CharacterAdded:Wait()
+            local humanoid = character:WaitForChild("Humanoid")
+                character["Right Leg"].Transparency = 1
+                character["Left Leg"].Transparency = 1
+
+                character["Left Leg"].Massless = true
+                local LeftLegM = Instance.new("Part", character)
+                LeftLegM.Name = "Left Leg"
+                LeftLegM.CanCollide = false
+                LeftLegM.Color = character["Left Leg"].Color
+                LeftLegM.Size = Vector3.new(1,2,1)
+                LeftLegM.Locked = true
+                LeftLegM.Position = character["Left Leg"].Position
+
+                local Attachment = Instance.new("Attachment", LeftLegM)
+                Attachment.Name = "LeftFootAttachment"
+                Attachment.Position = Vector3.new(0,-1,0)
+
+                local MotorHip = Instance.new("Motor6D", character.Torso)
+                MotorHip.Name = "Fake Left Hip"
+                MotorHip.C0 = CFrame.new(-1,-1,0,0,0,-1,0,1,0,1,0,0)
+                MotorHip.C1 = CFrame.new(-0.5,1,0,0,0,-1,0,1,0,1,0,0)
+                MotorHip.MaxVelocity = 0.1
+                MotorHip.Part0 = character.Torso
+                MotorHip.Part1 = LeftLegM
+
+                character["Right Leg"].Massless = true
+                local RightLegM = Instance.new("Part", character)
+                RightLegM.Name = "Right Leg"
+                RightLegM.CanCollide = false
+                RightLegM.Color = character["Right Leg"].Color
+                RightLegM.Size = Vector3.new(1,2,1)
+                RightLegM.Locked = true
+                RightLegM.Position = character["Right Leg"].Position
+
+                local Attachment2 = Instance.new("Attachment", RightLegM)
+                Attachment2.Name = "RightFootAttachment"
+                Attachment2.Position = Vector3.new(0,-1,0)
+
+                local MotorHip2 = Instance.new("Motor6D", character.Torso)
+                MotorHip2.Name = "Fake Right Hip"
+                MotorHip2.C0 = CFrame.new(1,-1,0,0,0,1,0,1,0,-1,0,0)
+                MotorHip2.C1 = CFrame.new(0.5,1,0,0,0,1,0,1,0,-1,0,0)
+                MotorHip2.MaxVelocity = 0.1
+                MotorHip2.Part0 = character.Torso
+                MotorHip2.Part1 = RightLegM
+
+            end
+    end
+})
+
+
+    Tab2:Section({Title = "Reach Method 2 "})
+
+
+
+--------------------------------------------------
+-- SERVICES
+--------------------------------------------------
+local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
+local player = Players.LocalPlayer
 
-VS:Button({
-    Title = "Volley React",
-    Icon = "",
-    Justify = "Center",
-    Callback = function()
-        local reachEnabled = true
-        local reachDistance = 3.75
-        local reachConnection = nil
-        local insideVolley = false
+--------------------------------------------------
+-- VARIABLES
+--------------------------------------------------
+local reachEnabled = false
+local autoEnableAfterReset = false
+local wasReachEnabledBeforeReset = false
 
-        -- Determine the correct volley part based on team
-        local function getTeamVolleyPart()
-            if player.Team then
-                if player.Team.Name == "Blue" then
-                    return workspace.GKSystem:FindFirstChild("Fix1")
-                elseif player.Team.Name == "Red" then
-                    return workspace.GKSystem:FindFirstChild("Fix2")
-                end
+local normalLegsEnabled = false
+local wasNormalLegsBeforeReset = false
+
+local selectedLegName = "Right Leg"
+local boxSize = Vector3.new(10, 10, 10)
+local currentConnection = nil
+
+--------------------------------------------------
+-- VISUAL BOX
+--------------------------------------------------
+local visualBox = Instance.new("Part")
+visualBox.Anchored = true
+visualBox.CanCollide = false
+visualBox.Transparency = 1
+visualBox.Material = Enum.Material.Neon
+visualBox.Color = Color3.fromRGB(255, 0, 0)
+visualBox.Size = boxSize
+visualBox.Parent = workspace
+
+--------------------------------------------------
+-- BOX CHECK
+--------------------------------------------------
+local function isBoxTouching(cf1, size1, cf2, size2)
+    local min1 = cf1.Position - size1/2
+    local max1 = cf1.Position + size1/2
+    local min2 = cf2.Position - size2/2
+    local max2 = cf2.Position + size2/2
+
+    return (min1.X <= max2.X and max1.X >= min2.X)
+       and (min1.Y <= max2.Y and max1.Y >= min2.Y)
+       and (min1.Z <= max2.Z and max1.Z >= min2.Z)
+end
+
+--------------------------------------------------
+-- REACH TOGGLE
+--------------------------------------------------
+
+    Tab2:Toggle({
+        Title = "Enable / Disable Reach",
+        Desc = "",
+        Value = false,
+        Callback = function(Value)
+  reachEnabled = Value
+      wasReachEnabledBeforeReset = Value
+
+      if currentConnection then
+         currentConnection:Disconnect()
+         currentConnection = nil
+      end
+      if not Value then return end
+
+      local character = player.Character or player.CharacterAdded:Wait()
+      local hrp = character:WaitForChild("HumanoidRootPart")
+      local leg = character:WaitForChild(selectedLegName)
+
+      if character:FindFirstChild("Right Leg") then
+         character["Right Leg"].Transparency = 1
+      end
+      if character:FindFirstChild("Left Leg") then
+         character["Left Leg"].Transparency = 1
+      end
+
+      local originalLegCFrame = leg.CFrame
+
+      local hip = character:FindFirstChild(
+         selectedLegName == "Right Leg" and "Right Hip" or "Left Hip",
+         true
+      )
+      if hip then hip:Destroy() end
+
+      currentConnection = RunService.RenderStepped:Connect(function()
+         local TPSSystem = workspace:FindFirstChild("TPSSystem")
+         local TPS = TPSSystem and TPSSystem:FindFirstChild("TPS")
+         if not TPS or not hrp or not leg then return end
+
+         visualBox.Size = boxSize
+         visualBox.CFrame = hrp.CFrame
+
+         if isBoxTouching(hrp.CFrame, boxSize, TPS.CFrame, TPS.Size) then
+            leg.CFrame = TPS.CFrame
+         else
+            leg.CFrame = originalLegCFrame
+         end
+      end)
+        end
+    })
+
+
+
+    Tab2:Toggle({
+        Title = "Enable / Disable Auto Enable After Death / Reset",
+        Desc = "",
+        Value = false,
+        Callback = function(Value)
+      autoEnableAfterReset = Value
+        end
+    })
+
+
+    Tab2:Dropdown({
+        Title = "Choose Your Leg",
+        List = {"Right Leg", "Left Leg"},
+        Value = "Right Leg",
+        Callback = function(Value)
+         selectedLegName = Value[1]
+      if reachEnabled then
+         Toggle:Set(false)
+         task.wait()
+         Toggle:Set(true)
+      end
+        end
+    })
+    Tab2:Slider({
+        Title = "Box Size X",
+        Min = 1,
+        Max = 20,
+        Rounding = 0,
+        Value = 1,
+        Callback = function(v)
+      boxSize = Vector3.new(v, boxSize.Y, boxSize.Z)
+        end
+    })
+
+        Tab2:Slider({
+        Title = "Box Size Y",
+        Min = 1,
+        Max = 20,
+        Rounding = 0,
+        Value = 1,
+        Callback = function(v)
+      boxSize = Vector3.new(boxSize.X, v, boxSize.Z)
+        end
+    })
+    Tab2:Slider({
+        Title = "Box Size Z",
+        Min = 1,
+        Max = 20,
+        Rounding = 0,
+        Value = 1,
+        Callback = function(v)
+      boxSize = Vector3.new(boxSize.X, boxSize.Y, v)
+        end
+    })
+    Tab2:Slider({
+        Title = "Box Size XYZ",
+        Min = 1,
+        Max = 20,
+        Rounding = 0,
+        Value = 1,
+        Callback = function(v)
+      boxSize = Vector3.new(v, v, v)
+        end
+    })
+
+    Tab2:Textbox({
+        Title = "Box Size XYZ",
+        Desc = "Custom Size",
+        Placeholder = "Number",
+        Value = "",
+        ClearTextOnFocus = false,
+        Callback = function(v)
+      boxSize = Vector3.new(v, v, v)
+        end
+    })
+
+    Tab2:Textbox({
+        Title = "Box Transperncy",
+        Desc = "0-1",
+        Placeholder = "Number",
+        Value = "",
+        ClearTextOnFocus = false,
+        Callback = function(v)
+      visualBox.Transparency = math.clamp(tonumber(v) or 0.5, 0, 1)
+        end
+    })
+
+    Tab2:Toggle({
+        Title = "Appear Normal",
+        Desc = "",
+        Value = false,
+        Callback = function(Value)
+        normalLegsEnabled = Value
+        wasNormalLegsBeforeReset = Value
+
+        if Value then
+            local character = player.Character or player.CharacterAdded:Wait()
+            local humanoid = character:WaitForChild("Humanoid")
+
+            if humanoid.RigType == Enum.HumanoidRigType.R6 then
+                -- R6 legs setup
+                character["Right Leg"].Transparency = 1
+                character["Left Leg"].Transparency = 1
+
+                character["Left Leg"].Massless = true
+                local LeftLegM = Instance.new("Part", character)
+                LeftLegM.Name = "Left Leg"
+                LeftLegM.CanCollide = false
+                LeftLegM.Color = character["Left Leg"].Color
+                LeftLegM.Size = Vector3.new(1,2,1)
+                LeftLegM.Locked = true
+                LeftLegM.Position = character["Left Leg"].Position
+
+                local Attachment = Instance.new("Attachment", LeftLegM)
+                Attachment.Name = "LeftFootAttachment"
+                Attachment.Position = Vector3.new(0,-1,0)
+
+                local MotorHip = Instance.new("Motor6D", character.Torso)
+                MotorHip.Name = "Fake Left Hip"
+                MotorHip.C0 = CFrame.new(-1,-1,0,0,0,-1,0,1,0,1,0,0)
+                MotorHip.C1 = CFrame.new(-0.5,1,0,0,0,-1,0,1,0,1,0,0)
+                MotorHip.MaxVelocity = 0.1
+                MotorHip.Part0 = character.Torso
+                MotorHip.Part1 = LeftLegM
+
+                character["Right Leg"].Massless = true
+                local RightLegM = Instance.new("Part", character)
+                RightLegM.Name = "Right Leg"
+                RightLegM.CanCollide = false
+                RightLegM.Color = character["Right Leg"].Color
+                RightLegM.Size = Vector3.new(1,2,1)
+                RightLegM.Locked = true
+                RightLegM.Position = character["Right Leg"].Position
+
+                local Attachment2 = Instance.new("Attachment", RightLegM)
+                Attachment2.Name = "RightFootAttachment"
+                Attachment2.Position = Vector3.new(0,-1,0)
+
+                local MotorHip2 = Instance.new("Motor6D", character.Torso)
+                MotorHip2.Name = "Fake Right Hip"
+                MotorHip2.C0 = CFrame.new(1,-1,0,0,0,1,0,1,0,-1,0,0)
+                MotorHip2.C1 = CFrame.new(0.5,1,0,0,0,1,0,1,0,-1,0,0)
+                MotorHip2.MaxVelocity = 0.1
+                MotorHip2.Part0 = character.Torso
+                MotorHip2.Part1 = RightLegM
+
+            elseif humanoid.RigType == Enum.HumanoidRigType.R15 then
+                character["RightLowerLeg"].Transparency = 1
+                character["LeftLowerLeg"].Transparency = 1
             end
-            return nil
         end
-
-        local volleyPart = getTeamVolleyPart()
-        if not volleyPart then
-
-            return
         end
+    })
 
-        -- Optional: set size for clarity
-        volleyPart.Size = Vector3.new(85, 15.479999542236328, 34.80000305175781)
 
-        -- Function to check if player is inside the zone
-        local function checkInsideZone()
-            local char = player.Character
-            local root = char and char:FindFirstChild("HumanoidRootPart")
-            if not root then return false end
+--------------------------------------------------
+-- HANDLE CHARACTER RESET (WITH 5s DELAY)
+--------------------------------------------------
+player.CharacterAdded:Connect(function(char)
+    local hum = char:WaitForChild("Humanoid")
 
-            local pos = root.Position
-            local min = volleyPart.Position - (volleyPart.Size / 2)
-            local max = volleyPart.Position + (volleyPart.Size / 2)
+    hum.Died:Connect(function()
+        wasReachEnabledBeforeReset = reachEnabled
+        wasNormalLegsBeforeReset = normalLegsEnabled
+    end)
 
-            return pos.X >= min.X and pos.X <= max.X and
-                   pos.Y >= min.Y and pos.Y <= max.Y and
-                   pos.Z >= min.Z and pos.Z <= max.Z
+    task.wait(5) -- wait 5 seconds after respawn
+
+    if autoEnableAfterReset and wasReachEnabledBeforeReset then
+        Toggle:Set(false)
+        task.wait(0.1)
+        Toggle:Set(true)
+    end
+
+    if wasNormalLegsBeforeReset then
+        NormalLegsToggle:Set(false)
+        task.wait(0.1)
+        NormalLegsToggle:Set(true)
+    end
+end)
+
+end
+local Tab3 = Window:Tab({Title = "Reacts", Icon = "apple"}) do
+    Tab3:Section({Title = "Twistzz React"})
+
+
+
+        Tab3:Button({
+        Title = "OP REACT NEW ITS FIREEEEEE",
+        Desc = "W REACT BY TWISTZZ ",
+        Callback = function()
+
+            --------------------------------------------------
+-- SERVICES
+--------------------------------------------------
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local player = Players.LocalPlayer
+
+--------------------------------------------------
+-- VARIABLES
+--------------------------------------------------
+local reachEnabled = false
+local selectedLegName = "Right Leg"
+local reachDistance = 2.3 -- how far your leg can reach
+local currentConnection = nil
+
+--------------------------------------------------
+-- ENABLE REACH
+--------------------------------------------------
+local function enableReach()
+    if reachEnabled then return end
+    reachEnabled = true
+
+    local character = player.Character or player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+    local leg = character:WaitForChild(selectedLegName)
+
+    -- Hide legs
+    if character:FindFirstChild("Right Leg") then
+        character["Right Leg"].Transparency = 1
+    end
+    if character:FindFirstChild("Left Leg") then
+        character["Left Leg"].Transparency = 1
+    end
+
+    -- Destroy hip joint for free movement
+    local hip = character:FindFirstChild(
+        selectedLegName == "Right Leg" and "Right Hip" or "Left Hip",
+        true
+    )
+    if hip then hip:Destroy() end
+
+    currentConnection = RunService.RenderStepped:Connect(function()
+        local TPSSystem = workspace:FindFirstChild("TPSSystem")
+        local TPS = TPSSystem and TPSSystem:FindFirstChild("TPS")
+        if not TPS or not hrp or not leg then return end
+
+        local direction = (TPS.Position - hrp.Position)
+        local distance = direction.Magnitude
+
+        if distance <= reachDistance then
+            -- Snap leg to TPS CFrame (touch)
+            leg.CFrame = TPS.CFrame
+        else
+            -- Move leg closer to target but within max reach
+            local moveVector = direction.Unit * reachDistance
+            leg.CFrame = CFrame.new(hrp.Position + moveVector)
         end
+    end)
+end
 
-        -- Function to start the reach loop
-        local function startReachLoop()
-            if reachConnection then
-                reachConnection:Disconnect()
-                reachConnection = nil
+--------------------------------------------------
+-- DISABLE REACH
+--------------------------------------------------
+local function disableReach()
+    reachEnabled = false
+    if currentConnection then
+        currentConnection:Disconnect()
+        currentConnection = nil
+    end
+
+    local character = player.Character
+    if character then
+        if character:FindFirstChild("Right Leg") then
+            character["Right Leg"].Transparency = 0
+        end
+        if character:FindFirstChild("Left Leg") then
+            character["Left Leg"].Transparency = 0
+        end
+    end
+end
+
+--------------------------------------------------
+-- CHANGE REACH DISTANCE
+--------------------------------------------------
+local function setReachDistance(dist)
+    reachDistance = dist
+end
+
+--------------------------------------------------
+-- USAGE EXAMPLE
+--------------------------------------------------
+enableReach()          -- enable reach
+setReachDistance(2.3)   -- optional: set max reach distance
+-- disableReach()       -- disable reach when done
+
+
+
+
+            local character = player.Character or player.CharacterAdded:Wait()
+            local humanoid = character:WaitForChild("Humanoid")
+
+            if humanoid.RigType == Enum.HumanoidRigType.R6 then
+            local character = player.Character or player.CharacterAdded:Wait()
+            local humanoid = character:WaitForChild("Humanoid")
+                character["Right Leg"].Transparency = 1
+                character["Left Leg"].Transparency = 1
+
+                character["Left Leg"].Massless = true
+                local LeftLegM = Instance.new("Part", character)
+                LeftLegM.Name = "Left Leg"
+                LeftLegM.CanCollide = false
+                LeftLegM.Color = character["Left Leg"].Color
+                LeftLegM.Size = Vector3.new(1,2,1)
+                LeftLegM.Locked = true
+                LeftLegM.Position = character["Left Leg"].Position
+
+                local Attachment = Instance.new("Attachment", LeftLegM)
+                Attachment.Name = "LeftFootAttachment"
+                Attachment.Position = Vector3.new(0,-1,0)
+
+                local MotorHip = Instance.new("Motor6D", character.Torso)
+                MotorHip.Name = "Fake Left Hip"
+                MotorHip.C0 = CFrame.new(-1,-1,0,0,0,-1,0,1,0,1,0,0)
+                MotorHip.C1 = CFrame.new(-0.5,1,0,0,0,-1,0,1,0,1,0,0)
+                MotorHip.MaxVelocity = 0.1
+                MotorHip.Part0 = character.Torso
+                MotorHip.Part1 = LeftLegM
+
+                character["Right Leg"].Massless = true
+                local RightLegM = Instance.new("Part", character)
+                RightLegM.Name = "Right Leg"
+                RightLegM.CanCollide = false
+                RightLegM.Color = character["Right Leg"].Color
+                RightLegM.Size = Vector3.new(1,2,1)
+                RightLegM.Locked = true
+                RightLegM.Position = character["Right Leg"].Position
+
+                local Attachment2 = Instance.new("Attachment", RightLegM)
+                Attachment2.Name = "RightFootAttachment"
+                Attachment2.Position = Vector3.new(0,-1,0)
+
+                local MotorHip2 = Instance.new("Motor6D", character.Torso)
+                MotorHip2.Name = "Fake Right Hip"
+                MotorHip2.C0 = CFrame.new(1,-1,0,0,0,1,0,1,0,-1,0,0)
+                MotorHip2.C1 = CFrame.new(0.5,1,0,0,0,1,0,1,0,-1,0,0)
+                MotorHip2.MaxVelocity = 0.1
+                MotorHip2.Part0 = character.Torso
+                MotorHip2.Part1 = RightLegM
+
+            end
+local Players = game:GetService("Players")
+
+local player = Players.LocalPlayer
+
+player.CharacterAdded:Connect(function(character)
+--------------------------------------------------
+-- SERVICES
+--------------------------------------------------
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local player = Players.LocalPlayer
+
+--------------------------------------------------
+-- VARIABLES
+--------------------------------------------------
+local reachEnabled = false
+local selectedLegName = "Right Leg"
+local reachDistance = 2.3 -- how far your leg can reach
+local currentConnection = nil
+
+--------------------------------------------------
+-- ENABLE REACH
+--------------------------------------------------
+local function enableReach()
+    if reachEnabled then return end
+    reachEnabled = true
+
+    local character = player.Character or player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+    local leg = character:WaitForChild(selectedLegName)
+
+    -- Hide legs
+    if character:FindFirstChild("Right Leg") then
+        character["Right Leg"].Transparency = 1
+    end
+    if character:FindFirstChild("Left Leg") then
+        character["Left Leg"].Transparency = 1
+    end
+
+    -- Destroy hip joint for free movement
+    local hip = character:FindFirstChild(
+        selectedLegName == "Right Leg" and "Right Hip" or "Left Hip",
+        true
+    )
+    if hip then hip:Destroy() end
+
+    currentConnection = RunService.RenderStepped:Connect(function()
+        local TPSSystem = workspace:FindFirstChild("TPSSystem")
+        local TPS = TPSSystem and TPSSystem:FindFirstChild("TPS")
+        if not TPS or not hrp or not leg then return end
+
+        local direction = (TPS.Position - hrp.Position)
+        local distance = direction.Magnitude
+
+        if distance <= reachDistance then
+            -- Snap leg to TPS CFrame (touch)
+            leg.CFrame = TPS.CFrame
+        else
+            -- Move leg closer to target but within max reach
+            local moveVector = direction.Unit * reachDistance
+            leg.CFrame = CFrame.new(hrp.Position + moveVector)
+        end
+    end)
+end
+
+--------------------------------------------------
+-- DISABLE REACH
+--------------------------------------------------
+local function disableReach()
+    reachEnabled = false
+    if currentConnection then
+        currentConnection:Disconnect()
+        currentConnection = nil
+    end
+
+    local character = player.Character
+    if character then
+        if character:FindFirstChild("Right Leg") then
+            character["Right Leg"].Transparency = 0
+        end
+        if character:FindFirstChild("Left Leg") then
+            character["Left Leg"].Transparency = 0
+        end
+    end
+end
+
+--------------------------------------------------
+-- CHANGE REACH DISTANCE
+--------------------------------------------------
+local function setReachDistance(dist)
+    reachDistance = dist
+end
+
+--------------------------------------------------
+-- USAGE EXAMPLE
+--------------------------------------------------
+enableReach()          -- enable reach
+setReachDistance(2.3)   -- optional: set max reach distance
+-- disableReach()       -- disable reach when done
+
+
+
+
+            local character = player.Character or player.CharacterAdded:Wait()
+            local humanoid = character:WaitForChild("Humanoid")
+
+            if humanoid.RigType == Enum.HumanoidRigType.R6 then
+            local character = player.Character or player.CharacterAdded:Wait()
+            local humanoid = character:WaitForChild("Humanoid")
+                character["Right Leg"].Transparency = 1
+                character["Left Leg"].Transparency = 1
+
+                character["Left Leg"].Massless = true
+                local LeftLegM = Instance.new("Part", character)
+                LeftLegM.Name = "Left Leg"
+                LeftLegM.CanCollide = false
+                LeftLegM.Color = character["Left Leg"].Color
+                LeftLegM.Size = Vector3.new(1,2,1)
+                LeftLegM.Locked = true
+                LeftLegM.Position = character["Left Leg"].Position
+
+                local Attachment = Instance.new("Attachment", LeftLegM)
+                Attachment.Name = "LeftFootAttachment"
+                Attachment.Position = Vector3.new(0,-1,0)
+
+                local MotorHip = Instance.new("Motor6D", character.Torso)
+                MotorHip.Name = "Fake Left Hip"
+                MotorHip.C0 = CFrame.new(-1,-1,0,0,0,-1,0,1,0,1,0,0)
+                MotorHip.C1 = CFrame.new(-0.5,1,0,0,0,-1,0,1,0,1,0,0)
+                MotorHip.MaxVelocity = 0.1
+                MotorHip.Part0 = character.Torso
+                MotorHip.Part1 = LeftLegM
+
+                character["Right Leg"].Massless = true
+                local RightLegM = Instance.new("Part", character)
+                RightLegM.Name = "Right Leg"
+                RightLegM.CanCollide = false
+                RightLegM.Color = character["Right Leg"].Color
+                RightLegM.Size = Vector3.new(1,2,1)
+                RightLegM.Locked = true
+                RightLegM.Position = character["Right Leg"].Position
+
+                local Attachment2 = Instance.new("Attachment", RightLegM)
+                Attachment2.Name = "RightFootAttachment"
+                Attachment2.Position = Vector3.new(0,-1,0)
+
+                local MotorHip2 = Instance.new("Motor6D", character.Torso)
+                MotorHip2.Name = "Fake Right Hip"
+                MotorHip2.C0 = CFrame.new(1,-1,0,0,0,1,0,1,0,-1,0,0)
+                MotorHip2.C1 = CFrame.new(0.5,1,0,0,0,1,0,1,0,-1,0,0)
+                MotorHip2.MaxVelocity = 0.1
+                MotorHip2.Part0 = character.Torso
+                MotorHip2.Part1 = RightLegM
+
+            end
+end)
+
+            Window:Notify({
+                Title = "React",
+                Desc = "Action performed successfully.",
+                Time = 3
+            })
+        end
+    })
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+-- Helper function using Tab3 UI
+local function CreateReactSection(name, velocity, isGoalkeeper)
+    -- Section
+    Tab3:Section({
+        Title = name
+    })
+
+    -- Button
+    Tab3:Button({
+        Title = name,
+        Desc = "Activate "..name,
+        Callback = function()
+
+            if isGoalkeeper then
+                local gkActions = {
+                    "SaveRA", "SaveLA", "SaveRL",
+                    "SaveLL", "SaveT", "Tackle", "Header"
+                }
+
+                for _, action in ipairs(gkActions) do
+                    local meta = getrawmetatable(game)
+                    local oldNamecall = meta.__namecall
+                    setreadonly(meta, false)
+
+                    meta.__namecall = newcclosure(function(self, ...)
+                        local method = getnamecallmethod()
+
+                        if method == "FireServer" and tostring(self) == action then
+                            local args = { ... }
+                            args[2] = player.Character.Humanoid.LLCL
+                            return oldNamecall(self, unpack(args))
+                        end
+
+                        return oldNamecall(self, ...)
+                    end)
+
+                    setreadonly(meta, true)
+                end
+
+            else
+                game.Workspace.TPSSystem.TPS.Velocity = velocity
             end
 
-            if not reachEnabled or not volleyPart then return end
-
-            reachConnection = RunService.RenderStepped:Connect(function()
-                insideVolley = checkInsideZone()
-                if not insideVolley then return end
-
-                local character = player.Character
-                local rootPart = character and character:FindFirstChild("HumanoidRootPart")
-                local humanoid = character and character:FindFirstChild("Humanoid")
-                if not (character and rootPart and humanoid) then return end
-
-                local tps = workspace:FindFirstChild("TPSSystem") and workspace.TPSSystem:FindFirstChild("TPS")
-                if not tps then return end
-
-                local distance = (rootPart.Position - tps.Position).Magnitude
-                if distance <= reachDistance then
-                    local prefFolder = game.Lighting:FindFirstChild(player.Name)
-                    local preferredFoot = prefFolder and prefFolder:FindFirstChild("PreferredFoot")
-                    if not preferredFoot then return end
-
-                    local limbName
-                    if humanoid.RigType == Enum.HumanoidRigType.R6 then
-                        limbName = (preferredFoot.Value == 1) and "Right Leg" or "Left Leg"
-                    else
-                        limbName = (preferredFoot.Value == 1) and "RightLowerLeg" or "LeftLowerLeg"
-                    end
-
-                    local limb = character:FindFirstChild(limbName)
-                    if limb then
-                        firetouchinterest(limb, tps, 0)
-                        firetouchinterest(limb, tps, 1)
-                    end
-                end
-            end)
+            Window:Notify({
+                Title = name,
+                Desc = "React enabled successfully",
+                Time = 3
+            })
         end
+    })
+end
 
-        -- Start the loop
-        startReachLoop()
+-- Create buttons
+CreateReactSection("Better React", Vector3.new(100, 100, 100), false)
+CreateReactSection("Alz React", Vector3.new(100, 100, 100), false)
+CreateReactSection("Foxtede React", Vector3.new(110, 110, 110), false)
+CreateReactSection("Goalkeeper React", nil, true)
 
-        -- Optional: continuously update insideVolley (for safety)
-        task.spawn(function()
-            while reachEnabled do
-                task.wait(0.1)
-                insideVolley = checkInsideZone()
+
+
+
+
+local Tab5 = Window:Tab({Title = "Moss & Head Reach", Icon = "headset"}) do
+
+
+    Tab5:Section({Title = "Moss"})
+
+
+    local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+local character = player.Character or player.CharacterAdded:Wait()
+local head = character:WaitForChild("Head")
+
+local originalHeadSize = head.Size
+local originalHeadY = head.Position.Y
+
+local enabled = false
+local afterResetEnabled = false
+local sizeX, sizeY, sizeZ = 5, 5, 5
+
+local function removeHair(char)
+	for _, item in ipairs(char:GetChildren()) do
+		if item:IsA("Accessory") then
+			local handle = item:FindFirstChild("Handle")
+			if handle and handle:FindFirstChild("HairAttachment") then
+				item:Destroy()
+			end
+		end
+	end
+end
+
+local function updateHead()
+	if not enabled or not head then return end
+
+	local newSize = Vector3.new(sizeX, sizeY, sizeZ)
+	head.Size = newSize
+
+	local offset = (newSize.Y - originalHeadSize.Y) / 2 + 0.5
+	head.Position = Vector3.new(
+		head.Position.X,
+		originalHeadY + offset,
+		head.Position.Z
+	)
+end
+
+local function applyAll()
+	if not enabled or not head then return end
+
+	originalHeadSize = head.Size
+	originalHeadY = head.Position.Y
+
+	head.Transparency = 1
+	removeHair(character)
+	updateHead()
+end
+
+
+player.CharacterAdded:Connect(function(char)
+	character = char
+	head = char:WaitForChild("Head")
+
+	originalHeadSize = head.Size
+	originalHeadY = head.Position.Y
+
+	if afterResetEnabled then
+		task.wait(0.1)
+		applyAll()
+	end
+end)
+
+Tab5:Toggle({
+	Title = "Enable / Disable Moss (MAKE SURE Y SIZE IS HIGHER THEN X AND Y OTHERWISE IT WONT WORK GOOD !!)",
+	Desc = "Head Reach",
+	Value = false,
+	Callback = function(v)
+		enabled = v
+
+		if v then
+			applyAll()
+		else
+			head.Size = originalHeadSize
+			head.Position = Vector3.new(
+				head.Position.X,
+				originalHeadY,
+				head.Position.Z
+			)
+			head.Transparency = 0
+		end
+	end
+})
+
+Tab5:Slider({
+	Title = "Set Size X",
+	Min = 1,
+	Max = 10,
+	Rounding = 0,
+	Value = 5,
+	Callback = function(val)
+		sizeX = val
+		updateHead()
+	end
+})
+
+Tab5:Slider({
+	Title = "Set Size Y",
+	Min = 1,
+	Max = 10,
+	Rounding = 0,
+	Value = 5,
+	Callback = function(val)
+		sizeY = val
+		updateHead()
+	end
+})
+
+Tab5:Slider({
+	Title = "Set Size Z",
+	Min = 1,
+	Max = 10,
+	Rounding = 0,
+	Value = 5,
+	Callback = function(val)
+		sizeZ = val
+		updateHead()
+	end
+})
+local RunService = game:GetService("RunService")
+local fakeHead = nil
+local fakeHeadConn = nil
+
+Tab5:Toggle({
+	Title = "Enable / Disable After Reset",
+	Desc = "Reapply on Respawn",
+	Value = false,
+	Callback = function(v)
+		afterResetEnabled = v
+	end
+})
+
+
+local Tab6 = Window:Tab({Title = "Help", Icon = "circle-help"}) do
+
+
+Tab6:Section({ Title = "Air Dribble Helper" })
+
+local airDribbleEnabled = false
+local airPart
+local airConn
+
+Tab6:Toggle({
+    Title = "Enable / Disable Air Dribble Helper",
+    Desc = "Shows helper under the ball",
+    Value = false,
+    Callback = function(v)
+        airDribbleEnabled = v
+
+        if not v then
+            if airConn then airConn:Disconnect() end
+            if airPart then airPart:Destroy() end
+        end
+    end
+})
+
+Tab6:Slider({
+    Title = "Air Dribble Helper Size",
+    Min = 0,
+    Max = 100,
+    Rounding = 0,
+    Value = 10,
+    Callback = function(val)
+        if not airDribbleEnabled then return end
+
+        if airPart then airPart:Destroy() end
+
+        local part = Instance.new("Part")
+        part.Name = "TPS"
+        part.Size = Vector3.new(val, 0.001, val)
+        part.Anchored = true
+        part.Transparency = 1
+        part.BrickColor = BrickColor.new("Bright red")
+        part.Parent = workspace
+        airPart = part
+
+        local tpsSystem = workspace:FindFirstChild("TPSSystem")
+        local tpsTarget = tpsSystem and tpsSystem:FindFirstChild("TPS")
+
+        airConn = game:GetService("RunService").RenderStepped:Connect(function()
+            if tpsTarget and airPart then
+                airPart.Position = tpsTarget.Position - Vector3.new(0, 1, 0)
             end
         end)
-
-
     end
 })
 
 
+Tab6:Section({ Title = "ZZZZ Helper" })
 
-VS:Toggle({
-    Flag = "EnableVolleyReact2",
-    Title = "Enable / Disable Ball Collision",
-    Desc = "",
-    Default = false,
+local zzzzPart
+local zzzzConn
+
+Tab6:Toggle({
+    Title = "ZZZZ Helper",
+    Desc = "Static helper under ball",
+    Value = false,
     Callback = function(state)
         if state then
-local TPS = workspace:WaitForChild("TPSSystem"):WaitForChild("TPS")
+            local part = Instance.new("Part")
+            part.Name = "TPS1"
+            part.Size = Vector3.new(9, 0.001, 9)
+            part.Anchored = true
+            part.Transparency = 1
+            part.BrickColor = BrickColor.new("Bright red")
+            part.Parent = workspace
+            zzzzPart = part
 
--- Create the part
-local follower = Instance.new("Part")
-follower.Name = "FollowerPart"
-follower.Shape = Enum.PartType.Ball
-follower.Anchored = true
-follower.CanCollide = true
-follower.Material = Enum.Material.Air
-follower.Color = TPS.Color -- Start with same color
-follower.Parent = workspace
+            local tpsSystem = workspace:FindFirstChild("TPSSystem")
+            local tpsTarget = tpsSystem and tpsSystem:FindFirstChild("TPS")
 
--- Sync function
-local RunService = game:GetService("RunService")
-
-RunService.Heartbeat:Connect(function()
-    if TPS then
-        -- Match size
-        follower.Size = TPS.Size
-        
-        -- Match position (and rotation)
-        follower.CFrame = TPS.CFrame
-        
-        -- Match color
-        follower.Color = TPS.Color
-    end
-end)
-
-else 
-
-    if workspace.FollowerPart then 
-        workspace.FollowerPart:Destroy()
-    end
-
-end
-
-    end
-})
-
-
-          RC:Section({
-        Title = [[Old Ball Collision]],
-        TextSize = 18,
-        TextTransparency = .35,
-        FontWeight = Enum.FontWeight.Medium,
-    })
-
-
-
-RC:Toggle({
-    Flag = "",
-    Title = "Enable / Disable Ball Collision",
-    Desc = "",
-    Default = false,
-    Callback = function(state)
-        if state then
-local TPS = workspace:WaitForChild("TPSSystem"):WaitForChild("TPS")
-
--- Create the part
-local follower = Instance.new("Part")
-follower.Name = "FollowerPart"
-follower.Shape = Enum.PartType.Ball
-follower.Anchored = true
-follower.CanCollide = true
-follower.Material = Enum.Material.Air
-follower.Color = TPS.Color -- Start with same color
-follower.Parent = workspace
-
--- Sync function
-local RunService = game:GetService("RunService")
-
-RunService.Heartbeat:Connect(function()
-    if TPS then
-        -- Match size
-        follower.Size = TPS.Size
-        
-        -- Match position (and rotation)
-        follower.CFrame = TPS.CFrame
-        
-        -- Match color
-        follower.Color = TPS.Color
-    end
-end)
-
-else 
-
-    if workspace.FollowerPart then 
-        workspace.FollowerPart:Destroy()
-    end
-
-end
-
-    end
-})
-
-
-          RC:Section({
-        Title = [[Reduce Ball Delay]],
-        TextSize = 18,
-        TextTransparency = .35,
-        FontWeight = Enum.FontWeight.Medium,
-    })
-
-RC:Button({
-    Title = "Reduce Ball Delay",
-    Icon = "",
-    Justify = "Center",
-    Callback = function()
-
-						workspace.TPSSystem.TPS.MainAttachment:Destroy()
-
-
-    end
-})
-
-
-          RC:Section({
-        Title = [[Better React]],
-        TextSize = 18,
-        TextTransparency = .35,
-        FontWeight = Enum.FontWeight.Medium,
-    })
-
-RC:Button({
-    Title = "Better React",
-    Icon = "",
-    Justify = "Center",
-    Callback = function()
-
-					game.Workspace.TPSSystem.TPS.Velocity = Vector3.new(100, 100, 100)
-
-    end
-})
-
-
-
-
-          RC:Section({
-        Title = [[Alz React]],
-        TextSize = 18,
-        TextTransparency = .35,
-        FontWeight = Enum.FontWeight.Medium,
-    })
-
-RC:Button({
-    Title = "Alz React",
-    Icon = "",
-    Justify = "Center",
-    Callback = function()
-
-    game.Workspace.TPSSystem.TPS.Velocity = Vector3.new(100, 100, 100)
-
-    end
-})
-
-          RC:Section({
-        Title = [[Foxtede React]],
-        TextSize = 18,
-        TextTransparency = .35,
-        FontWeight = Enum.FontWeight.Medium,
-    })
-
-RC:Button({
-    Title = "Foxtede React",
-    Icon = "",
-    Justify = "Center",
-    Callback = function()
-
-    game.Workspace.TPSSystem.TPS.Velocity = Vector3.new(110, 110, 110)
-
-    end
-})
-
-
-          RC:Section({
-        Title = [[Goalkeeper React]],
-        TextSize = 18,
-        TextTransparency = .35,
-        FontWeight = Enum.FontWeight.Medium,
-    })
-
-RC:Button({
-    Title = "Goalkeeper React",
-    Icon = "",
-    Justify = "Center",
-    Callback = function()
-
-        local gkActions = {"SaveRA", "SaveLA", "SaveRL", "SaveLL", "SaveT", "Tackle", "Header"}
-
-        for _, action in ipairs(gkActions) do
-            local meta = getrawmetatable(game)
-            local oldNamecall = meta.namecall
-            setreadonly(meta, false)
-
-            meta.namecall = newcclosure(function(self, ...)
-                local method = tostring(getnamecallmethod())
-                if method == "FireServer" and tostring(self) == action then
-                    local args = {...}
-                    args[2] = player.Character.Humanoid.LLCL
-                    return oldNamecall(self, unpack(args))
+            zzzzConn = game:GetService("RunService").RenderStepped:Connect(function()
+                if tpsTarget and zzzzPart then
+                    zzzzPart.Position = tpsTarget.Position - Vector3.new(0, 1, 0)
                 end
-                return oldNamecall(self, ...)
             end)
+        else
+            if zzzzConn then zzzzConn:Disconnect() end
+            if zzzzPart then zzzzPart:Destroy() end
+        end
+    end
+})
 
-            setreadonly(meta, true)
+Tab6:Section({ Title = "Infinite Dribble Helper" })
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local ball = workspace.TPSSystem.TPS
+local UIS = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+
+local followBall = false
+local toggleEnabled = false
+local isMovingManually = false
+
+local function follow()
+    if followBall and toggleEnabled and not isMovingManually then
+        character.Humanoid:MoveTo(ball.Position)
+    end
+end
+
+UIS.InputBegan:Connect(function(input, gp)
+    if input.KeyCode == Enum.KeyCode.B and not gp and toggleEnabled then
+        followBall = not followBall
+    end
+end)
+
+UIS.InputEnded:Connect(function(input)
+    isMovingManually = false
+end)
+
+RunService.RenderStepped:Connect(function()
+    follow()
+end)
+
+player.CharacterAdded:Connect(function(char)
+    character = char
+end)
+
+Tab6:Toggle({
+    Title = "Infinite Dribble Helper (B to Toggle)",
+    Desc = "Automatically follows the ball",
+    Value = false,
+    Callback = function(v)
+        toggleEnabled = v
+        if not v then
+            followBall = false
+        end
+    end
+})
+
+
+local Tab7 = Window:Tab({Title = "Game Modifaction", Icon = "volleyball"}) do
+
+    Tab7:Section({Title = "Ball Modification"})
+
+    Tab7:Textbox({
+        Title = "Ball Size",
+        Desc = "",
+        Placeholder = "",
+        Value = "",
+        ClearTextOnFocus = false,
+        Callback = function(text)
+        game:GetService("Workspace").TPSSystem.TPS.Size = Vector3.new(text, text, text)
+if         game.Workspace["FollowerPart"] then 
+            game.Workspace["FollowerPart"].Size = Vector3.new(text,text,text)
+end
+        end
+    })
+
+    Tab7:Button({
+        Title = "Default Ball Size",
+        Desc = "Press this shit to reset the ball size",
+        Callback = function()
+        game:GetService("Workspace").TPSSystem.TPS.Size = Vector3.new(    2.5, 2.5, 2.5)
+if         game.Workspace["FollowerPart"] then 
+            game.Workspace["FollowerPart"].Size = Vector3.new(    2.5, 2.5, 2.5)
+end
+            Window:Notify({
+                Title = "Ball Size Returned Back To Normal",
+                Desc = "Action performed successfully.",
+                Time = 3
+            })
+        end
+    })
+
+        Tab7:Toggle({
+        Title = "Ball Collision",
+        Desc = "gives back old collision (2019).",
+        Value = false,
+        Callback = function(v)
+  if v then
+local TPS = workspace:WaitForChild("TPSSystem"):WaitForChild("TPS")
+
+-- Create the part
+local follower = Instance.new("Part")
+follower.Name = "FollowerPart"
+follower.Shape = Enum.PartType.Ball
+follower.Anchored = true
+follower.CanCollide = true
+follower.Material = Enum.Material.Air
+follower.Color = TPS.Color -- Start with same color
+follower.Parent = workspace
+
+-- Sync function
+local RunService = game:GetService("RunService")
+
+RunService.Heartbeat:Connect(function()
+    if TPS then
+        -- Match size
+        follower.Size = TPS.Size
+        
+        -- Match position (and rotation)
+        follower.CFrame = TPS.CFrame
+        
+        -- Match color
+        follower.Color = TPS.Color
+    end
+end)
+
+else 
+
+    if workspace.FollowerPart then 
+        workspace.FollowerPart:Destroy()
+    end
+
+end
+        end
+    })
+
+Tab7:Toggle({
+    Title = "Ball Predication",
+    Desc = "",
+    Value = false,
+    Callback = function(v)
+
+        local RunService = game:GetService("RunService")
+        local Workspace = game:GetService("Workspace")
+        local ball = workspace.TPSSystem.TPS
+        local gravity = Workspace.Gravity
+
+        local predictionTime = 0.65
+        local segments = 20
+        local smoothness = 0.15
+        local groundCheckDistance = 1.2
+
+        -- create once
+        if not _G.BallPredictionFolder then
+            local folder = Instance.new("Folder", Workspace)
+            folder.Name = "BallPrediction"
+            _G.BallPredictionFolder = folder
+
+            local attachments = {}
+            for i = 1, segments do
+                local att = Instance.new("Attachment")
+                att.WorldPosition = ball.Position
+                att.Parent = folder
+                attachments[i] = att
+            end
+            _G.BallPredictionAttachments = attachments
+
+            local beam = Instance.new("Beam")
+            beam.Attachment0 = attachments[1]
+            beam.Attachment1 = attachments[#attachments]
+            beam.FaceCamera = true
+            beam.Width0 = 0.18
+            beam.Width1 = 0.18
+            beam.Color = ColorSequence.new(Color3.fromRGB(0, 150, 255)) -- BLUE
+            beam.Transparency = NumberSequence.new(0.25)
+            beam.LightEmission = 1
+            beam.Segments = segments * 2
+            beam.Parent = folder
+            beam.Enabled = false
+            _G.BallPredictionBeam = beam
         end
 
+        local beam = _G.BallPredictionBeam
+        local attachments = _G.BallPredictionAttachments
+
+        -- raycast params
+        local rayParams = RaycastParams.new()
+        rayParams.FilterDescendantsInstances = {ball}
+        rayParams.FilterType = Enum.RaycastFilterType.Blacklist
+
+        local function isBallInAir()
+            return Workspace:Raycast(
+                ball.Position,
+                Vector3.new(0, -groundCheckDistance, 0),
+                rayParams
+            ) == nil
+        end
+
+        -- toggle logic
+        if v then
+            if _G.BallPredictionConn then
+                _G.BallPredictionConn:Disconnect()
+            end
+
+            _G.BallPredictionConn = RunService.RenderStepped:Connect(function()
+                if not ball or not ball:IsA("BasePart") then return end
+
+                if not isBallInAir() then
+                    beam.Enabled = false
+                    return
+                end
+
+                beam.Enabled = true
+
+                local startPos = ball.Position
+                local startVel = ball.AssemblyLinearVelocity
+
+                for i = 1, segments do
+                    local t = (i / segments) * predictionTime
+                    local predictedPos =
+                        startPos +
+                        (startVel * t) +
+                        Vector3.new(0, -0.5 * gravity * t * t, 0)
+
+                    local groundHit = Workspace:Raycast(
+                        predictedPos,
+                        Vector3.new(0, -2, 0),
+                        rayParams
+                    )
+
+                    if groundHit then
+                        predictedPos = groundHit.Position + Vector3.new(0, 0.25, 0)
+                    end
+
+                    attachments[i].WorldPosition =
+                        attachments[i].WorldPosition:Lerp(predictedPos, smoothness)
+                end
+            end)
+        else
+            if _G.BallPredictionConn then
+                _G.BallPredictionConn:Disconnect()
+                _G.BallPredictionConn = nil
+            end
+            beam.Enabled = false
+        end
     end
 })
 
-          P:Section({
-        Title = [[Walkspeed]],
-        TextSize = 18,
-        TextTransparency = .35,
-        FontWeight = Enum.FontWeight.Medium,
+Tab7:Toggle({
+    Title = "Block Ball",
+    Desc = "Minecraft ball (it gives some crazy ass react for ball.)",
+    Value = false,
+    Callback = function(v)
+if v  then 
+      local A_1 = game:GetService("Workspace").TPSSystem.TPS -- you can delete this 
+                        
+                                    A_1.Shape = "Block" --HERE CHANGE THE SHAPE
+else 
+                                      local A_1 = game:GetService("Workspace").TPSSystem.TPS -- you can delete this 
+                        
+                                    A_1.Shape = "Sphere" --HERE CHANGE THE SHAPE
+end
+    end
+})
+
+    Tab7:Section({Title = "CFGS (Recommand using ball collision with it.)"})
+
+       Tab7:Button({
+        Title = "Best CFG",
+        Desc = "",
+        Callback = function()
+    game:GetService("Workspace").TPSSystem.TPS.Size = Vector3.new(2.85, 2.85, 2.85)
+            Window:Notify({
+                Title = "CFG Used",
+                Desc = "Action performed successfully.",
+                Time = 3
+            })
+        end
+    })
+
+           Tab7:Button({
+        Title = "ZZZZ CFG",
+        Desc = "",
+        Callback = function()
+    game:GetService("Workspace").TPSSystem.TPS.Size = Vector3.new(3, 3, 3)
+            Window:Notify({
+                Title = "CFG Used",
+                Desc = "Action performed successfully.",
+                Time = 3
+            })
+        end
+    })
+               Tab7:Button({
+        Title = "Inf Dribble CFG",
+        Desc = "",
+        Callback = function()
+    game:GetService("Workspace").TPSSystem.TPS.Size = Vector3.new(3, 3, 3)
+            Window:Notify({
+                Title = "CFG Used",
+                Desc = "Action performed successfully.",
+                Time = 3
+            })
+        end
     })
 
 
-local WalkspeedEnabled = false
-local CurrentSpeed = 23 
-    
 
-P:Toggle({
-    Flag = "Enable / Disable Walkspeed",
-    Title = "Enable / Disable Walkspeed",
-    Desc = "",
-    Default = false,
-    Callback = function(v)
+
+
+
+    local Tab8 = Window:Tab({Title = "Player", Icon = "user"}) do
+
+    Tab8:Section({Title = "Walkspeed"})
+    local WalkspeedEnabled = false
+local CurrentSpeed = 23 
+    Tab8:Toggle({
+        Title = "Enable / Disable Walkspeed",
+        Desc = "",
+        Value = false,
+        Callback = function(v)
         WalkspeedEnabled = v
         local character = game.Players.LocalPlayer.Character
         if character and character:FindFirstChildOfClass("Humanoid") then
@@ -1176,22 +1586,15 @@ P:Toggle({
                 character:FindFirstChildOfClass("Humanoid").WalkSpeed = 23 
             end
         end
+        end
+    })
 
-    end
-})
-
-P:Slider({
-        Title = "Walkspeed Size",
-        Desc = "",
-        IsTooltip = true,
-        IsTextbox = false,
-        Width = 200,
-        Step = 1,
-        Value = {
-            Min = 23,
-            Max = 75,
-            Default = 23,
-        },
+       Tab8:Slider({
+        Title = "Set Speed",
+        Min = 23,
+        Max = 75,
+        Rounding = 0,
+        Value = 23,
         Callback = function(v)
         CurrentSpeed = v
         if WalkspeedEnabled then
@@ -1200,58 +1603,18 @@ P:Slider({
                 character:FindFirstChildOfClass("Humanoid").WalkSpeed = v
             end
         end
-
         end
     })
 
-
-        P:Keybind({
-        Flag = "Reset Walkspeed back",
-        Title = "Reset Walkspeed Back To Default",
-        Desc = "",
-        Value = "",
-        Callback = function(v)
-               local character = game.Players.LocalPlayer.Character
-            if character and character:FindFirstChildOfClass("Humanoid") then
-                character:FindFirstChildOfClass("Humanoid").WalkSpeed = 23
-            end
-        end
-    })
-
-
-P:Keybind({
-    Flag = "",
-    Title = "Restore Walkspeed from Slider",
-    Desc = "",
-    Value = "",
-    Callback = function(v)
-        local character = game.Players.LocalPlayer.Character
-        if character and character:FindFirstChildOfClass("Humanoid") then
-            -- enable walkspeed and apply slider value
-            WalkspeedEnabled = true
-            character:FindFirstChildOfClass("Humanoid").WalkSpeed = CurrentSpeed
-        end
-    end
-})
-
-          P:Section({
-        Title = [[Jump Power]],
-        TextSize = 18,
-        TextTransparency = .35,
-        FontWeight = Enum.FontWeight.Medium,
-    })
-
-
+        Tab8:Section({Title = "Jump Power"})
 local JumpEnabled = false
 local CurrentJump = 50 
-    
 
-P:Toggle({
-    Flag = "",
-    Title = "Enable / Disable Jump Power",
-    Desc = "",
-    Default = false,
-    Callback = function(v)
+    Tab8:Toggle({
+        Title = "Enable / Disable Jumppower",
+        Desc = "",
+        Value = false,
+        Callback = function(v)
         JumpEnabled = v
         local character = game.Players.LocalPlayer.Character
         if character and character:FindFirstChildOfClass("Humanoid") then
@@ -1261,22 +1624,15 @@ P:Toggle({
                 character:FindFirstChildOfClass("Humanoid").JumpPower = 50 
             end
         end
+        end
+    })
 
-    end
-})
-
-P:Slider({
-        Title = "Jump Power",
-        Desc = "",
-        IsTooltip = true,
-        IsTextbox = false,
-        Width = 200,
-        Step = 1,
-        Value = {
-            Min = 50,
-            Max = 120,
-            Default = 50,
-        },
+       Tab8:Slider({
+        Title = "Set JumpPower",
+        Min = 50,
+        Max = 120,
+        Rounding = 0,
+        Value = 50,
         Callback = function(v)
         CurrentJump = v
         if JumpEnabled then
@@ -1285,47 +1641,13 @@ P:Slider({
                 character:FindFirstChildOfClass("Humanoid").JumpPower = v
             end
         end
-
         end
     })
 
 
-        P:Keybind({
-        Flag = "R",
-        Title = "Reset Jump Power Back To Default",
-        Desc = "",
-        Value = "",
-        Callback = function(v)
-           local character = game.Players.LocalPlayer.Character
-            if character and character:FindFirstChildOfClass("Humanoid") then
-                character:FindFirstChildOfClass("Humanoid").JumpPower = 50
-            end
-        end
-    })
+            Tab8:Section({Title = "Avatar Stolen"})
 
-P:Keybind({
-    Flag = "",
-    Title = "Restore Jump Power from Slider",
-    Desc = "Sets your Jump Power to the value currently selected in the slider",
-    Value = "",
-    Callback = function(v)
-        JumpEnabled = true
-        local character = game.Players.LocalPlayer.Character
-        if character and character:FindFirstChildOfClass("Humanoid") then
-            character:FindFirstChildOfClass("Humanoid").JumpPower = CurrentJump
-        end
-    end
-})
-
-          P:Section({
-        Title = [[Avatar Stolen]],
-        TextSize = 18,
-        TextTransparency = .35,
-        FontWeight = Enum.FontWeight.Medium,
-    })
-
-    
-
+            
  local Players = game:GetService("Players")
 local lplr = Players.LocalPlayer
 
@@ -1385,13 +1707,11 @@ lplr.CharacterAdded:Connect(function(char)
     end
 end)
 
--- Toggle UI
-P:Toggle({
-    Flag = "",
-    Title = "Enable / Disable Avatar Stolen",
-    Desc = "",
-    Default = false,
-    Callback = function(state)
+                Tab8:Toggle({
+        Title = "Enable / Disable Avatar Stolen",
+        Desc = "",
+        Value = false,
+        Callback = function(state)
         Disguise.Enabled = state
         if state and DisguiseUsername.Value ~= "" and lplr.Character then
             DisguiseCharacter(lplr.Character)
@@ -1401,1163 +1721,30 @@ P:Toggle({
                 hum:ApplyDescriptionClientServer(Players:GetHumanoidDescriptionAsync(lplr.UserId))
             end
         end
-    end
-})
+        end
+    })
 
--- Input UI for username
-P:Input({
-    Flag = "Avatar Stolen",
-    Title = "Avatar Stolen",
-    Desc = "Write user here.",
-    Value = "Default value",
-    InputIcon = "bird",
-    Type = "Input",
-    Placeholder = "Enter user...",
-    Callback = function(input)
+        Tab8:Textbox({
+        Title = "Avatar Stolen",
+        Desc = "",
+        Placeholder = "",
+        Value = "",
+        ClearTextOnFocus = false,
+        Callback = function(input)
         DisguiseUsername.Value = input
         if Disguise.Enabled and lplr.Character then
             DisguiseCharacter(lplr.Character)
         end
-    end
-})
-
-
-          PP:Section({
-        Title = [[Clumsy]],
-        TextSize = 18,
-        TextTransparency = .35,
-        FontWeight = Enum.FontWeight.Medium,
-    })
-
-
-    PP:Input({
-    Flag = "Clumsy",
-    Title = "Clumsy",
-    Desc = "Only use numbers between 0.01 - 0.10",
-    Value = "0",
-    InputIcon = "",
-    Type = "Input",
-    Placeholder = "",
-    Callback = function(Value)
-            settings():GetService("NetworkSettings").IncomingReplicationLag = tonumber(Value)
-    end
-})
-
-
-
-          PP:Section({
-        Title = [[FPS Unlocker]],
-        TextSize = 18,
-        TextTransparency = .35,
-        FontWeight = Enum.FontWeight.Medium,
-    })
-PP:Button({ Title = "Unlock FPS", Justify = "Center", Icon = "", Callback = function() 
-setfpscap(10000) 
-end })
-PP:Button({
-    Title = "Track FPS",
-    Justify = "Center",
-    Icon = "",
-    Callback = function()
-
-        -- UI
-        local ScreenGui = Instance.new("ScreenGui")
-        local Frame = Instance.new("Frame")
-        local UICorner = Instance.new("UICorner")
-        local FPSLabel = Instance.new("TextLabel")
-        local TitleLabel = Instance.new("TextLabel")
-
-        ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-        ScreenGui.ResetOnSpawn = false
-
-        Frame.Parent = ScreenGui
-        Frame.BackgroundColor3 = Color3.fromRGB(68, 68, 68)
-        Frame.Position = UDim2.new(0.0228, 0, 0.0541, 0)
-        Frame.Size = UDim2.new(0, 79, 0, 56)
-        Frame.Active = true
-        Frame.Draggable = true
-
-        UICorner.Parent = Frame
-
-        FPSLabel.Parent = Frame
-        FPSLabel.BackgroundTransparency = 1
-        FPSLabel.Position = UDim2.new(0, 0, 0.35, 0)
-        FPSLabel.Size = UDim2.new(1, 0, 0.6, 0)
-        FPSLabel.Font = Enum.Font.SourceSansBold
-        FPSLabel.Text = "0"
-        FPSLabel.TextSize = 34
-        FPSLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
-        FPSLabel.TextWrapped = true
-
-        TitleLabel.Parent = Frame
-        TitleLabel.BackgroundTransparency = 1
-        TitleLabel.Position = UDim2.new(0, 0, 0.05, 0)
-        TitleLabel.Size = UDim2.new(1, 0, 0.3, 0)
-        TitleLabel.Font = Enum.Font.SourceSansBold
-        TitleLabel.Text = "FPS"
-        TitleLabel.TextScaled = true
-        TitleLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
-
-        -- FPS LOGIC (REAL FPS)
-        local RunService = game:GetService("RunService")
-        local lastTime = tick()
-        local frames = 0
-
-        RunService.RenderStepped:Connect(function()
-            frames += 1
-            local now = tick()
-
-            if now - lastTime >= 1 then
-                local fps = math.floor(frames / (now - lastTime))
-                FPSLabel.Text = tostring(fps)
-
-                -- Color logic
-                if fps >= 120 then
-                    FPSLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
-                elseif fps >= 60 then
-                    FPSLabel.TextColor3 = Color3.fromRGB(255, 170, 0)
-                else
-                    FPSLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
-                end
-
-                lastTime = now
-                frames = 0
-            end
-        end)
-    end
-})
-
-PP:Button({ Title = "Fake Ping 20-30", Justify = "Center", Icon = "", Callback = function() 
-local RunService = game:GetService("RunService")
-local CoreGui = game:GetService("CoreGui")
-local PerfStats = CoreGui:WaitForChild("RobloxGui"):WaitForChild("PerformanceStats")
-
-local valueLabel
-local barFrame
-
--- Find NetworkPing PS_Button
-for _, button in ipairs(PerfStats:GetChildren()) do
-    if button.Name == "PS_Button" then
-        local panel = button:FindFirstChild("StatsMiniTextPanelClass")
-        if panel then
-            local title = panel:FindFirstChild("TitleLabel")
-            local value = panel:FindFirstChild("ValueLabel")
-
-            if title and value and title.Text == "NetworkPing" then
-                valueLabel = value
-
-                -- Get PS_BarFrame
-                local graph = value.Parent.Parent:FindFirstChild("PS_AnnotatedGraph")
-                if graph then
-                    barFrame = graph:FindFirstChild("PS_BarFrame")
-                end
-                break
-            end
-        end
-    end
-end
-
-if not valueLabel then
-    warn("NetworkPing ValueLabel not found")
-    return
-end
-
--- Fake ping state
-local fakePing = math.random(20, 25)
-local decimal = math.random(0, 99)
-local timer = 0
-local changeInterval = 0.7 -- how often ping value changes
-
--- FORCE override every frame
-RunService.RenderStepped:Connect(function(dt)
-    timer += dt
-    if timer >= changeInterval then
-        timer = 0
-        fakePing += math.random(-1, 1)
-        fakePing = math.clamp(fakePing, 18, 30)
-        decimal = math.random(0, 99)
-    end
-
-    -- Always force text (prevents real ping coming back)
-    valueLabel.Text = string.format("%d.%02d ms", fakePing, decimal)
-
-    -- Force graph bar yellow
-    if barFrame then
-        for _, v in ipairs(barFrame:GetDescendants()) do
-            if v:IsA("Frame") then
-                v.BackgroundColor3 = Color3.fromRGB(255, 221, 0) -- yellow
-            elseif v:IsA("UIStroke") then
-                v.Color = Color3.fromRGB(255, 221, 0)
-            elseif v:IsA("ImageLabel") then
-                v.ImageColor3 = Color3.fromRGB(255, 221, 0)
-            end
-        end
-    end
-end)
-
-end })
-PP:Button({ Title = "FPS Boost", Justify = "Center", Icon = "", Callback = function() 
-              getgenv().Kitten = 5
-local function applyOptimizations()
-    local workspace = game.Workspace
-    local lighting = game.Lighting
-    local terrain = workspace.Terrain
-    local starterGui = game:GetService("StarterGui")
-
-    terrain.WaterWaveSize = 0
-    terrain.WaterWaveSpeed = 0
-    terrain.WaterReflectance = 0
-    terrain.WaterTransparency = 0
-
-    lighting.GlobalShadows = false
-    lighting.FogEnd = 9e9
-    lighting.Brightness = 0
-
-    settings().Rendering.QualityLevel = "Level01"
-
-    for _, descendant in pairs(game:GetDescendants()) do
-        if descendant:IsA("BasePart") or descendant:IsA("MeshPart") then
-            descendant.Material = "SmoothPlastic"
-            descendant.Reflectance = 0
-            descendant.CastShadow = false
-        elseif descendant:IsA("Decal") then
-            descendant.Transparency = 1
-        elseif descendant:IsA("ParticleEmitter") or descendant:IsA("Trail") then
-            descendant.Lifetime = NumberRange.new(0)
-        elseif descendant:IsA("Explosion") then
-            descendant.BlastPressure = 1
-            descendant.BlastRadius = 1
-        elseif descendant:IsA("Fire") or descendant:IsA("SpotLight") or descendant:IsA("Smoke") then
-            descendant.Enabled = false
-        end
-    end
-
-    for _, effect in pairs(lighting:GetChildren()) do
-        if effect:IsA("PostEffect") or effect:IsA("DepthOfFieldEffect") then
-            effect.Enabled = false
-        end
-    end
-
-
-    starterGui:SetCore("SendNotification", {
-        Title = "FPS Boost",
-        Text = "The FPS Boost has applied!",
-        Duration = 7,
-        Style = {
-            Title = {
-                Font = Enum.Font.SourceSansBold,
-                TextSize = 20,
-                TextStrokeTransparency = 0,
-                TextColor = Color3.new(1, 1, 1),
-            },
-            Background = {
-                Transparency = 0.1,
-                BackgroundColor3 = Color3.new(0, 0.7, 1),
-                BorderSizePixel = 0,
-            },
-        },
-    })
-
-
-end
-
-applyOptimizations()
-end })
-
-          H:Section({
-        Title = [[ZZZZ Helper]],
-        TextSize = 18,
-        TextTransparency = .35,
-        FontWeight = Enum.FontWeight.Medium,
-    })
-
-    H:Toggle({
-    Flag = "",
-    Title = "Enable / Disable ZZZZ Helper",
-    Desc = "",
-    Default = false,
-    Callback = function(state)
- if state then
-    
-        local part = Instance.new("Part")
-        part.Name = "TPS1"
-    
-
-        part.Size = Vector3.new(9, 0.1, 9)  
-        part.Anchored = true
-        part.BrickColor = BrickColor.new("Bright red")
-        part.Transparency = 1 
-
-        part.Parent = game.Workspace
-    
-
-        local tpsSystem = game:GetService("Workspace"):FindFirstChild("TPSSystem")
-        local tpsTarget = tpsSystem and tpsSystem:FindFirstChild("TPS")
-    
-
-        local function updatePartPosition()
-            if tpsTarget then
-
-                part.Position = tpsTarget.Position - Vector3.new(0, 1, 0)
-            end
-        end
-    
-        updatePartPosition()
-    
-
-        local runService = game:GetService("RunService")
-        runService.RenderStepped:Connect(updatePartPosition)
-    else
-        for _, child in ipairs(game.Workspace:GetChildren()) do
-            if child.Name == "TPS1" then
-                child:Destroy()
-            end
-        end
-    end
-    end
-})
-
-         H:Section({
-        Title = [[Air Dribble Helper]],
-        TextSize = 18,
-        TextTransparency = .35,
-        FontWeight = Enum.FontWeight.Medium,
-    })
-
-        H:Toggle({
-    Flag = "",
-    Title = "Enable / Disable Air Dribble Helper",
-    Desc = "",
-    Default = false,
-    Callback = function(state)
-if Value then
-       warn("Enabled ")
-    else 
-        for _, child in ipairs(game.Workspace:GetChildren()) do
-            if child.Name == "TPS" then
-                child:Destroy()
-            end
-        end
-    end
-    end
-})
-
-
-  
-    H:Slider({
-        Title = "Air Dribble Helper Size",
-        Desc = "The Size Of The Reach",
-        IsTooltip = true,
-        IsTextbox = false,
-        Width = 200,
-        Step = 0.1,
-        Value = {
-            Min = 1,
-            Max = 15,
-            Default = 1,
-        },
-        Callback = function(val)
-        local part = Instance.new("Part")
-        part.Name = "TPS"
-    
-
-        part.Size = Vector3.new(val, 0.1, val)  
-        part.Anchored = true
-        part.BrickColor = BrickColor.new("Bright red")
-        part.Transparency = 1  
-    
-
-        part.Parent = game.Workspace
-    
-
-        local tpsSystem = game:GetService("Workspace"):FindFirstChild("TPSSystem")
-        local tpsTarget = tpsSystem and tpsSystem:FindFirstChild("TPS")
-    
-
-        local function updatePartPosition()
-            if tpsTarget then
-                part.Position = tpsTarget.Position - Vector3.new(0, 1, 0)
-            end
-        end
-    
-
-        updatePartPosition()
-    
-
-        local runService = game:GetService("RunService")
-        runService.RenderStepped:Connect(updatePartPosition)
         end
     })
 
 
-             H:Section({
-        Title = [[Inf Dribble Helper]],
-        TextSize = 18,
-        TextTransparency = .35,
-        FontWeight = Enum.FontWeight.Medium,
-    })
 
-    
+    local Tab9 = Window:Tab({Title = "Sky Changer", Icon = "cloud-cog"}) do
 
 
+    Tab9:Section({Title = "Sky Changers"})
 
-
-local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local ball = game.Workspace.TPSSystem.TPS
-local userInputService = game:GetService("UserInputService")
-local runService = game:GetService("RunService")
-
-local followBall = false
-local isMovingManually = false
-local toggleEnabled = false 
-
-local function follow()
-    if followBall and not isMovingManually and toggleEnabled then
-        character.Humanoid:MoveTo(ball.Position)
-    end
-end
-
-
-userInputService.InputEnded:Connect(function(input, gameProcessed)
-    if input.UserInputType == Enum.UserInputType.Keyboard or input.UserInputType == Enum.UserInputType.MouseMovement then
-        isMovingManually = false
-    end
-end)
-
-
-userInputService.InputBegan:Connect(function(input, gameProcessed)
-    if input.KeyCode == Enum.KeyCode.B and not gameProcessed and toggleEnabled then
-        followBall = not followBall
-        if followBall then
-            print("Following the ball")
-        else
-            print("Stopped following the ball")
-        end
-    end
-end)
-
-
-runService.RenderStepped:Connect(function()
-    if followBall and toggleEnabled then
-        follow()
-    end
-end)
-
-
-player.CharacterAdded:Connect(function(char)
-    character = char
-end)
-        H:Toggle({
-    Flag = "",
-    Title = "Enable / Disable Air Dribble Helper [PC]",
-    Desc = "Toggle it by pressing (B)",
-    Default = false,
-    Callback = function(state)
-    toggleEnabled = Value
-    if toggleEnabled then
-
-    else
-        followBall = false
-
-
-    end
-    end
-})
-
-        H:Toggle({
-    Flag = "",
-    Title = "Enable / Disable Air Dribble Helper [MOB]",
-    Desc = "it will make a GUI in your screen to control it.",
-    Default = false,
-    Callback = function(Value)
-toggleEnabled = Value
-
-
-        if Value then
-
-            local screenGui = Instance.new("ScreenGui")
-            screenGui.Name = "InfDribbleGui"
-            screenGui.ResetOnSpawn = false
-            screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-
-            local toggleButton = Instance.new("TextButton")
-            toggleButton.Name = "InfDribbleButton"
-            toggleButton.Size = UDim2.new(0, 120, 0, 40)
-            toggleButton.Position = UDim2.new(0, 20, 0.5, -20)
-            toggleButton.Text = "Inf Dribble: OFF"
-            toggleButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-            toggleButton.TextColor3 = Color3.new(1, 1, 1)
-            toggleButton.TextScaled = true
-            toggleButton.Parent = screenGui
-
-            toggleButton.MouseButton1Click:Connect(function()
-                followBall = not followBall
-                if followBall then
-                    toggleButton.Text = "Inf Dribble: ON"
-                else
-                    toggleButton.Text = "Inf Dribble: OFF"
-                end
-            end)
-
-        else
-
-            followBall = false
-            local playerGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui")
-            if playerGui then
-                local screenGui = playerGui:FindFirstChild("InfDribbleGui")
-                if screenGui then
-                    screenGui:Destroy()
-                end
-            end
-        end
-    end
-})
-
-
-
-
-             BM:Section({
-        Title = [[Ball Modifications]],
-        TextSize = 18,
-        TextTransparency = .35,
-        FontWeight = Enum.FontWeight.Medium,
-    })
-
-
-        BM:Input({
-        Flag = "I",
-        Title = "Ball Size",
-        Desc = "",
-        Value = "2.6",
-        Type = "Textarea", -- or "Textarea"
-        Placeholder = "Reach",
-        Callback = function(size) 
-            workspace.TPSSystem.TPS.Size = Vector3.new(size, size, size)
-        end
-    })
-
-    BM:Button({
-        Title = "Anti-Ball Fling ",
-        Justify = "Center",
-        IconAlign = "Left",
-        Icon = "", -- removing icon
-        Callback = function()
-
-        local player = game.Players.LocalPlayer
-        local runService = game:GetService("RunService")
-        local Clip = false
-        wait(0.1)
-        
-        local function noclipFunction()
-            if not Clip and player.Character then
-                for _, part in pairs(player.Character:GetDescendants()) do
-                    if part:IsA("BasePart") and part.CanCollide and (part.Name == "Right Leg" or part.Name == "Right Arm" or part.Name == "Left Arm" or part.Name == "Torso") then
-                        part.CanCollide = false
-                    end
-                end
-            end
-        end
-        
-        local noclipConnection = runService.Stepped:Connect(noclipFunction)  
-        end
-    })
-
-
-local RunService = game:GetService("RunService")
-local ball = workspace.TPSSystem.TPS
-local gravity = workspace.Gravity or 196.2
-
-local predictionDuration = 0.5   
-local timeStep = 0.05            
-
-
-local predictionParts = {}
-local lineParts = {}
-
-local function createOrGetPart(list, index, size, color, transparency)
-    if list[index] then
-        return list[index]
-    else
-        local part = Instance.new("Part")
-        part.Anchored = true
-        part.CanCollide = false
-        part.Size = size
-        part.Material = Enum.Material.Neon
-        part.Color = color
-        part.Transparency = transparency
-        part.CastShadow = false
-        part.Parent = workspace
-        list[index] = part
-        return part
-    end
-end
-
-local connection
-
-        BM:Toggle({
-    Flag = "",
-    Title = "Enable / Disable Ball Prediction",
-    Desc = "",
-    Default = false,
-    Callback = function(state)
-
-
-        if state then
-            if connection then connection:Disconnect() end
-
-            connection = RunService.Heartbeat:Connect(function()
-                if not ball or not ball:IsA("BasePart") then return end
-
-                local startPos = ball.Position
-                local startVel = ball.Velocity
-                local pointsCount = math.floor(predictionDuration / timeStep)
-                local positions = {}
-
-
-                for i = 1, pointsCount do
-                    local t = i * timeStep
-                    local predictedPos = startPos + (startVel * t) + Vector3.new(0, -0.5 * gravity * t * t, 0)
-                    positions[i] = predictedPos
-
-                    local pointPart = createOrGetPart(predictionParts, i, Vector3.new(0.3,0.3,0.3), Color3.fromRGB(0,255,0), 0.4)
-                    pointPart.CFrame = CFrame.new(predictedPos)
-                    pointPart.Transparency = 0.4
-                end
-
-                for i = 1, pointsCount - 1 do
-                    local pos1 = positions[i]
-                    local pos2 = positions[i + 1]
-                    local direction = pos2 - pos1
-                    local distance = direction.Magnitude
-                    local midPoint = pos1 + direction / 2
-                    local linePart = createOrGetPart(lineParts, i, Vector3.new(0.1,0.1,distance), Color3.fromRGB(0,255,0), 0.6)
-                    linePart.CFrame = CFrame.new(midPoint, pos2)
-                    linePart.Transparency = 0.6
-                end
-
-
-                for i = pointsCount + 1, #predictionParts do
-                    predictionParts[i].Transparency = 1
-                end
-                for i = pointsCount, #lineParts do
-                    lineParts[i].Transparency = 1
-                end
-            end)
-        else
-            if connection then connection:Disconnect() end
-            connection = nil
-            for _, part in pairs(predictionParts) do
-                part.Transparency = 1
-            end
-            for _, part in pairs(lineParts) do
-                part.Transparency = 1
-            end
-        end
-    end
-})
-
-
-
-
-BM:Toggle({
-    Flag = "",
-    Title = "Enable / Disable Ball Collision",
-    Desc = "",
-    Default = false,
-    Callback = function(state)
-        if state then
-local TPS = workspace:WaitForChild("TPSSystem"):WaitForChild("TPS")
-
--- Create the part
-local follower = Instance.new("Part")
-follower.Name = "FollowerPart"
-follower.Shape = Enum.PartType.Ball
-follower.Anchored = true
-follower.CanCollide = true
-follower.Material = Enum.Material.Air
-follower.Color = TPS.Color -- Start with same color
-follower.Parent = workspace
-
--- Sync function
-local RunService = game:GetService("RunService")
-
-RunService.Heartbeat:Connect(function()
-    if TPS then
-        -- Match size
-        follower.Size = TPS.Size
-        
-        -- Match position (and rotation)
-        follower.CFrame = TPS.CFrame
-        
-        -- Match color
-        follower.Color = TPS.Color
-    end
-end)
-
-else 
-
-    if workspace.FollowerPart then 
-        workspace.FollowerPart:Destroy()
-    end
-
-end
-
-    end
-})
-
-
-
-   BM:Dropdown({
-        Title = "Ball Texture",
-        Values = {
-            {
-                Title = "Default",
-                Desc = "",
-                Icon = "",
-                Callback = function() 
-           local ball = game.Workspace.TPSSystem.TPS
-
-
-        ball.Decal1.Texture = "rbxassetid://1731401359"
-        ball.Decal2.Texture = "rbxassetid://1731401359"
-        ball.Decal3.Texture = "rbxassetid://1731401811"
-        ball.Decal4.Texture = "rbxassetid://1731401811"
-        ball.Decal5.Texture = "rbxassetid://1731401359"
-        ball.Decal6.Texture = "rbxassetid://1731401359"
-
-                end
-            },
-            {
-                Title = "Addidas Brazuca",
-                Desc = "",
-                Icon = "",
-                Callback = function() 
-           local ball = game.Workspace.TPSSystem.TPS
-        ball.Decal1.Texture = "http://www.roblox.com/asset/?id=137668136"
-        ball.Decal2.Texture = "http://www.roblox.com/asset/?id=137668129"
-        ball.Decal3.Texture = "http://www.roblox.com/asset/?id=137668136"
-        ball.Decal4.Texture = "http://www.roblox.com/asset/?id=137668136"
-        ball.Decal5.Texture = "http://www.roblox.com/asset/?id=137668136"
-                end
-            },
-            {
-                Title = "Addidas Jabulani",
-                Desc = "",
-                Icon = "",
-                Callback = function() 
-           local ball = game.Workspace.TPSSystem.TPS
-        ball.Decal1.Texture = "http://www.roblox.com/asset/?id=76614961"
-        ball.Decal2.Texture = "http://www.roblox.com/asset/?id=76614961"
-        ball.Decal3.Texture = "http://www.roblox.com/asset/?id=76614961"
-        ball.Decal4.Texture = "http://www.roblox.com/asset/?id=76614961"
-        ball.Decal5.Texture = "http://www.roblox.com/asset/?id=76614961"
-        ball.Decal6.Texture = "http://www.roblox.com/asset/?id=76614961"
-
-                end
-            },
-        }
-    })
-
-
-       BM:Dropdown({
-        Title = "Ball Sound",
-        Values = {
-            {
-                Title = "Default",
-                Desc = "",
-                Icon = "",
-                Callback = function() 
-    local ballSound = game.Workspace.TPSSystem.TPS.Sound
-
-
-        ballSound.SoundId = "rbxassetid://2516069845"
-        ballSound.PlaybackSpeed = 0.7
-        ballSound.Volume = 0.7
-
-                end
-            },
-            {
-                Title = "OOF !",
-                Desc = "",
-                Icon = "",
-                Callback = function() 
-        ballSound.SoundId = "rbxassetid://5143383166"
-        ballSound.PlaybackSpeed = 1
-        ballSound.Volume = 2
-                end
-            },
-            {
-                Title = "Neverloose",
-                Desc = "",
-                Icon = "",
-                Callback = function() 
-    local ballSound = game.Workspace.TPSSystem.TPS.Sound
-
-        ballSound.SoundId = "rbxassetid://6607204501"
-        ballSound.PlaybackSpeed = 0.7
-        ballSound.Volume = 0.7
-    
-                end
-            },
-                      {
-                Title = "Rust",
-                Desc = "",
-                Icon = "",
-                Callback = function() 
-    local ballSound = game.Workspace.TPSSystem.TPS.Sound
-
-        ballSound.SoundId = "rbxassetid://1255040462"
-        ballSound.PlaybackSpeed = 0.7
-        ballSound.Volume = 0.7
-    
-                end
-            },          {
-                Title = "Bruh",
-                Desc = "",
-                Icon = "",
-                Callback = function() 
-    local ballSound = game.Workspace.TPSSystem.TPS.Sound
-
-      ballSound.SoundId = "rbxassetid://4275842574"
-        ballSound.PlaybackSpeed = 0.7
-        ballSound.Volume = 0.7
-    
-                end
-            },
-        }
-    })
-
-
-                 FG:Section({
-        Title = [[Free Gamepasses]],
-        TextSize = 18,
-        TextTransparency = .35,
-        FontWeight = Enum.FontWeight.Medium,
-    })
-
-    
-    local Players = game:GetService("Players")
-local player = Players.LocalPlayer
-local workspace = game:GetService("Workspace")
-
-local AnimationCurveLoop
-local AnimationTackleLoop
-
---------------------------------------------------
--- MORE CURVE
---------------------------------------------------
-FG:Toggle({
-    Flag = "MoreCurve",
-    Title = "More Curve",
-    Desc = "",
-    Default = false,
-    Callback = function(state)
-        local gui = player.PlayerGui.Start.GamePassMenu.Items.WoodenFloor
-        gui.Tick.Visible = state
-        gui.WoodenFloor.Style = state and "RobloxRoundButton" or "RobloxRoundDefaultButton"
-
-        if state then
-            local Humanoid = player.Character:WaitForChild("Humanoid")
-            AnimationCurveLoop = Humanoid.AnimationPlayed:Connect(function(AnimationTrack)
-                local trackNames = {
-                    "OldMKickL","OldMKick","OldLKickL","OldLKick",
-                    "MKickL","MKick","LKickL","LKick",
-                    "OldDribbleL","OldDribble","DribbleL","Dribble"
-                }
-
-                if table.find(trackNames, AnimationTrack.Name) then
-                    if (player.Character.HumanoidRootPart.Position - workspace.TPSSystem.TPS.Position).Magnitude < 3.45 then
-                        local event = workspace.FE.Actions[state and "KickC1" or "KickC2"]
-                        local A_1, A_2 = workspace.TPSSystem.TPS, player.Character.HumanoidRootPart
-                        event:FireServer(A_1, A_2)
-                        task.wait(0.2)
-                        event:FireServer(A_1, A_2)
-                    end
-                end
-            end)
-        else
-            if AnimationCurveLoop then
-                AnimationCurveLoop:Disconnect()
-                AnimationCurveLoop = nil
-            end
-        end
-    end
-})
-
---------------------------------------------------
--- BLUE FLAME
---------------------------------------------------
-FG:Toggle({
-    Flag = "BlueFlame",
-    Title = "Blue Flame",
-    Desc = "",
-    Default = false,
-    Callback = function(state)
-        if not state then return end
-
-        local start = player.PlayerGui:WaitForChild("Start")
-        start.PowerShot.Flame.Image = "rbxassetid://15316155280"
-        start.PowerShot.Flame.Flame.Image = "rbxassetid://15316155280"
-
-        player.Backpack.FValue.Value = 2
-
-        local item = start.GamePassMenu.Items.BlueFlame
-        item.Tick.Visible = true
-        item.BlueFlame.Image = ""
-        item.BlueFlame.HoverImage = ""
-        item.BlueFlame.PressedImage = ""
-        item.BlueFlame.Text.Visible = false
-    end
-})
-
---------------------------------------------------
--- UNLOCK COOLDOWN
---------------------------------------------------
-FG:Toggle({
-    Flag = "UnlockCooldown",
-    Title = "Unlock Cooldown",
-    Desc = "",
-    Default = false,
-    Callback = function(state)
-        if not state then return end
-
-        local start = player.PlayerGui:WaitForChild("Start")
-        start.PowerShot.PowerValue.Value = 30
-
-        local item = start.GamePassMenu.Items.Cooldown
-        item.Tick.Visible = true
-        item.Cooldown.Image = ""
-        item.Cooldown.HoverImage = ""
-        item.Cooldown.PressedImage = ""
-        item.Cooldown.Text.Visible = false
-    end
-})
-
---------------------------------------------------
--- POWERFUL TACKLE
---------------------------------------------------
-FG:Toggle({
-    Flag = "PowerfulTackle",
-    Title = "Powerful Tackle",
-    Desc = "",
-    Default = false,
-    Callback = function(state)
-        local gui = player.PlayerGui.Start.GamePassMenu.Items.RandomWeather
-        gui.Tick.Visible = state
-        gui.RandomWeather.Style = state and "RobloxRoundButton" or "RobloxRoundDefaultButton"
-        player.Backpack.TackleGamePass.Value = state
-
-        if state then
-            local Humanoid = player.Character:WaitForChild("Humanoid")
-            AnimationTackleLoop = Humanoid.AnimationPlayed:Connect(function(AnimationTrack)
-                if AnimationTrack.Name:match("Tackle") then
-                    if (player.Character.HumanoidRootPart.Position - workspace.TPSSystem.TPS.Position).Magnitude < 4.87 then
-                        task.wait(0.8)
-                        workspace.FE.Actions.KickG1:FireServer(
-                            workspace.TPSSystem.TPS,
-                            player.Character.HumanoidRootPart,
-                            30,
-                            Vector3.new(4000000, 700, 4000000)
-                        )
-                    end
-                end
-            end)
-        else
-            if AnimationTackleLoop then
-                AnimationTackleLoop:Disconnect()
-                AnimationTackleLoop = nil
-            end
-        end
-    end
-})
-
-
-                 TL:Section({
-        Title = [[Teleporting]],
-        TextSize = 18,
-        TextTransparency = .35,
-        FontWeight = Enum.FontWeight.Medium,
-    })
-
-
-    local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
-
-local player = Players.LocalPlayer
-local TPS = workspace:WaitForChild("TPSSystem"):WaitForChild("TPS")
-
-local Target = nil
-local teleporting = false
-local connection
-
---// Loop Teleport To Ball
-TL:Toggle({
-    Flag = "LoopTeleportBall",
-    Title = "Loop Teleporting to the Ball",
-    Desc = "Continuously teleports you near the ball",
-    Default = false,
-    Callback = function(state)
-        teleporting = state
-
-        if teleporting then
-            connection = RunService.Heartbeat:Connect(function()
-                local character = player.Character
-                if character then
-                    local hrp = character:FindFirstChild("HumanoidRootPart")
-                    if hrp and TPS then
-                        local offset = -TPS.CFrame.LookVector * 5 + Vector3.new(0, 3, 0)
-                        hrp.CFrame = TPS.CFrame + offset
-                    end
-                end
-            end)
-        else
-            if connection then
-                connection:Disconnect()
-                connection = nil
-            end
-        end
-    end
-})
-
---// Target Player Input
-TL:Input({
-    Title = "Target Player Username",
-    Icon = "user",
-    Callback = function(value)
-        local targetPlayer = Players:FindFirstChild(value)
-        Target = targetPlayer
-    end
-})
-
---// Teleport To Player
-TL:Button({
-    Title = "Teleport To Player",
-    Icon = "",
-    Justify = "Center",
-    Callback = function()
-        if Target
-        and player.Character
-        and Target.Character
-        and player.Character:FindFirstChild("HumanoidRootPart")
-        and Target.Character:FindFirstChild("HumanoidRootPart") then
-            player.Character.HumanoidRootPart.CFrame =
-                Target.Character.HumanoidRootPart.CFrame
-        end
-    end
-})
-
---// Teleport Above Player
-TL:Button({
-    Title = "Teleport Above Player",
-    Icon = "",
-    Justify = "Center",
-    Callback = function()
-        if Target
-        and player.Character
-        and Target.Character
-        and player.Character:FindFirstChild("HumanoidRootPart")
-        and Target.Character:FindFirstChild("HumanoidRootPart") then
-            player.Character.HumanoidRootPart.CFrame =
-                Target.Character.HumanoidRootPart.CFrame + Vector3.new(0, 10, 0)
-        end
-    end
-})
-
---// Teleport Under Player
-TL:Button({
-    Title = "Teleport Under Player",
-    Icon = "",
-    Justify = "Center",
-    Callback = function()
-        if Target
-        and player.Character
-        and Target.Character
-        and player.Character:FindFirstChild("HumanoidRootPart")
-        and Target.Character:FindFirstChild("HumanoidRootPart") then
-            player.Character.HumanoidRootPart.CFrame =
-                Target.Character.HumanoidRootPart.CFrame + Vector3.new(0, -5, 0)
-        end
-    end
-})
-
---// Teleport To Random Player
-TL:Button({
-    Title = "Teleport To Random Player",
-    Icon = "",
-    Justify = "Center",
-    Callback = function()
-        local others = {}
-
-        for _, p in ipairs(Players:GetPlayers()) do
-            if p ~= player and p.Character and p.Character:FindFirstChild("HumanoidRootPart") then
-                table.insert(others, p)
-            end
-        end
-
-        if #others > 0 then
-            local target = others[math.random(#others)]
-            player.Character.HumanoidRootPart.CFrame =
-                target.Character.HumanoidRootPart.CFrame + Vector3.new(0, 3, 0)
-        else
-            warn("Teleportation Failed: No other players found")
-        end
-    end
-})
-
---// Teleport To Closest Player
-TL:Button({
-    Title = "Teleport To Closest Player",
-    Icon = "",
-    Justify = "Center",
-    Callback = function()
-        local char = player.Character
-        if not char or not char:FindFirstChild("HumanoidRootPart") then return end
-
-        local hrp = char.HumanoidRootPart
-        local closest, dist = nil, math.huge
-
-        for _, p in ipairs(Players:GetPlayers()) do
-            if p ~= player and p.Character and p.Character:FindFirstChild("HumanoidRootPart") then
-                local d = (hrp.Position - p.Character.HumanoidRootPart.Position).Magnitude
-                if d < dist then
-                    dist = d
-                    closest = p
-                end
-            end
-        end
-
-        if closest then
-            hrp.CFrame = closest.Character.HumanoidRootPart.CFrame + Vector3.new(0, 3, 0)
-        else
-            warn("Teleportation Failed: No other players found")
-        end
-    end
-})
-
---// Teleport To Red Goal
-TL:Button({
-    Title = "Teleport To Red Goal",
-    Icon = "",
-    Justify = "Center",
-    Callback = function()
-        local char = player.Character or player.CharacterAdded:Wait()
-        local hrp = char:WaitForChild("HumanoidRootPart")
-        hrp.CFrame = workspace.RedGoal.Part.CFrame + Vector3.new(0, 3, 0)
-    end
-})
-
---// Teleport To Blue Goal
-TL:Button({
-    Title = "Teleport To Blue Goal",
-    Icon = "",
-    Justify = "Center",
-    Callback = function()
-        local char = player.Character or player.CharacterAdded:Wait()
-        local hrp = char:WaitForChild("HumanoidRootPart")
-        hrp.CFrame = workspace.BlueGoal.Part.CFrame + Vector3.new(0, 3, 0)
-    end
-})
 
 local Lighting = game:GetService("Lighting")
 
@@ -2576,20 +1763,9 @@ local function SetSky(data, stars)
     sky.StarCount = stars or 3000
     sky.Parent = Lighting
 end
-
-
-
-         SC:Section({
-        Title = [[Sky Changer]],
-        TextSize = 18,
-        TextTransparency = .35,
-        FontWeight = Enum.FontWeight.Medium,
-    })
-
-    SC:Button({
+Tab9:Button({
     Title = "Night Sky",
-    Icon = "",
-    Justify = "Center",
+    Desc = "Apply night skybox",
     Callback = function()
         SetSky({
             Bk="http://www.roblox.com/asset/?id=12064107",
@@ -2602,9 +1778,10 @@ end
     end
 })
 
-SC:Button({
+-- Scary Night
+Tab9:Button({
     Title = "Scary Night",
-    Justify = "Center",
+    Desc = "Dark scary atmosphere",
     Callback = function()
         SetSky({
             Bk="http://www.roblox.com/asset/?id=48020371",
@@ -2617,9 +1794,10 @@ SC:Button({
     end
 })
 
-SC:Button({
+-- Sakura Sky
+Tab9:Button({
     Title = "Sakura Sky",
-    Justify = "Center",
+    Desc = "Soft pink sakura sky",
     Callback = function()
         SetSky({
             Bk="http://www.roblox.com/asset/?id=271042516",
@@ -2632,9 +1810,10 @@ SC:Button({
     end
 })
 
-SC:Button({
+-- Galaxy Planets
+Tab9:Button({
     Title = "Galaxy Planets",
-    Justify = "Center",
+    Desc = "Planets & galaxy theme",
     Callback = function()
         SetSky({
             Bk="http://www.roblox.com/asset/?id=15983968922",
@@ -2647,9 +1826,10 @@ SC:Button({
     end
 })
 
-SC:Button({
+-- Purple Night Sky
+Tab9:Button({
     Title = "Purple Night Sky",
-    Justify = "Center",
+    Desc = "Purple themed night",
     Callback = function()
         SetSky({
             Bk="http://www.roblox.com/asset/?id=5084575798",
@@ -2662,9 +1842,10 @@ SC:Button({
     end
 })
 
-SC:Button({
+-- Sunset Orange
+Tab9:Button({
     Title = "Sunset Orange",
-    Justify = "Center",
+    Desc = "Orange sunset sky",
     Callback = function()
         SetSky({
             Bk="http://www.roblox.com/asset/?id=458016711",
@@ -2677,9 +1858,10 @@ SC:Button({
     end
 })
 
-SC:Button({
+-- Purple Sky
+Tab9:Button({
     Title = "Purple Sky",
-    Justify = "Center",
+    Desc = "Classic purple sky",
     Callback = function()
         SetSky({
             Bk="http://www.roblox.com/asset/?id=570557514",
@@ -2692,9 +1874,10 @@ SC:Button({
     end
 })
 
-SC:Button({
+-- Gray Sky
+Tab9:Button({
     Title = "Gray Sky",
-    Justify = "Center",
+    Desc = "Foggy gray sky",
     Callback = function()
         SetSky({
             Bk="http://www.roblox.com/asset/?id=18703245834",
@@ -2707,9 +1890,10 @@ SC:Button({
     end
 })
 
-SC:Button({
+-- Mountain Sky
+Tab9:Button({
     Title = "Mountain Sky",
-    Justify = "Center",
+    Desc = "Mountain landscape sky",
     Callback = function()
         SetSky({
             Bk="http://www.roblox.com/asset/?id=160188495",
@@ -2722,9 +1906,10 @@ SC:Button({
     end
 })
 
-SC:Button({
+-- Pinkie Preppy Sky
+Tab9:Button({
     Title = "Pinkie Preppy Sky",
-    Justify = "Center",
+    Desc = "Cute pink aesthetic sky",
     Callback = function()
         SetSky({
             Bk="http://www.roblox.com/asset/?id=11555017034",
@@ -2737,9 +1922,10 @@ SC:Button({
     end
 })
 
-SC:Button({
+-- Mountain Sky 2
+Tab9:Button({
     Title = "Mountain Sky 2",
-    Justify = "Center",
+    Desc = "Alternate mountain sky",
     Callback = function()
         SetSky({
             Bk="http://www.roblox.com/asset/?id=368385273",
@@ -2752,9 +1938,10 @@ SC:Button({
     end
 })
 
-SC:Button({
+-- Sunset Mountain Sky
+Tab9:Button({
     Title = "Sunset Mountain Sky",
-    Justify = "Center",
+    Desc = "Sunset over mountains",
     Callback = function()
         SetSky({
             Bk="http://www.roblox.com/asset/?id=17901353811",
@@ -2767,113 +1954,10 @@ SC:Button({
     end
 })
 
+Window:Notify({
+    Title = "Atlantic.dev",
+    Desc = "All components loaded successfully!",
+    Time = 4
+})
+end end end end end end
 
-         STT:Section({
-        Title = [[Settings]],
-        TextSize = 18,
-        TextTransparency = .35,
-        FontWeight = Enum.FontWeight.Medium,
-    })
-
-        STT:Keybind({
-        Flag = "KeybindTest",
-        Title = "Keybind",
-        Desc = "Keybind to open ui",
-        Value = "End",
-        Callback = function(v)
-            Window:SetToggleKey(Enum.KeyCode[v])
-        end
-    })
-
-    
-do -- config panel
-
-
-    local ConfigManager = Window.ConfigManager
-    local ConfigName = "default"
-
-    local ConfigNameInput = STT:Input({
-        Title = "Config Name",
-        Icon = "file-cog",
-        Callback = function(value)
-            ConfigName = value
-        end
-    })
-
-    STT:Space()
-    
-    -- local AutoLoadToggle = STT:Toggle({
-    --     Title = "Enable Auto Load to Selected Config",
-    --     Value = false,
-    --     Callback = function(v)
-    --         Window.CurrentConfig:SetAutoLoad(v)
-    --     end
-    -- })
-
-    STT:Space()
-
-    local AllConfigs = ConfigManager:AllConfigs()
-    local DefaultValue = table.find(AllConfigs, ConfigName) and ConfigName or nil
-
-    local AllConfigsDropdown = STT:Dropdown({
-        Title = "All Configs",
-        Desc = "Select existing configs",
-        Values = AllConfigs,
-        Value = DefaultValue,
-        Callback = function(value)
-            ConfigName = value
-            ConfigNameInput:Set(value)
-            
-            AutoLoadToggle:Set(ConfigManager:GetConfig(ConfigName).AutoLoad or false)
-        end
-    })
-
-    STT:Space()
-
-    STT:Button({
-        Title = "Save Config",
-        Icon = "",
-        Justify = "Center",
-        Callback = function()
-            Window.CurrentConfig = ConfigManager:Config(ConfigName)
-            if Window.CurrentConfig:Save() then
-                WindUI:Notify({
-                    Title = "Config Saved",
-                    Desc = "Config '" .. ConfigName .. "' saved",
-                    Icon = "check",
-                })
-            end
-            
-            AllConfigsDropdown:Refresh(ConfigManager:AllConfigs())
-        end
-    })
-
-    STT:Space()
-
-    STT:Button({
-        Title = "Load Config",
-        Icon = "",
-        Justify = "Center",
-        Callback = function()
-            Window.CurrentConfig = ConfigManager:CreateConfig(ConfigName)
-            if Window.CurrentConfig:Load() then
-                WindUI:Notify({
-                    Title = "Config Loaded",
-                    Desc = "Config '" .. ConfigName .. "' loaded",
-                    Icon = "refresh-cw",
-                })
-            end
-        end
-    })
-
-    STT:Space()
-
-    STT:Button({
-        Title = "Print AutoLoad Configs",
-        Icon = "",
-        Justify = "Center",
-        Callback = function()
-            print(HttpService:JSONDecode(ConfigManager:GetAutoLoadConfigs()))
-        end
-    })
-end
