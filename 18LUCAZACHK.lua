@@ -1,650 +1,1055 @@
--- 🔥 CEZAR HUB - Void Black Edition 🔥
 
--- Anti-Cheat Bypass
-for i,b in pairs(workspace.FE.Actions:GetChildren()) do
-    if b.Name == " " then
-        b:Destroy()
-    end
-end
+local AC = workspace.FE.Actions:FindFirstChild("KeepYourHeadUp_")
+local p = workspace.FE.Actions
 
-for i,b in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
-    if b.Name == " " then
-        b:Destroy()
-    end
-end
-
-local a = workspace.FE.Actions
-
-if a:FindFirstChild("KeepYourHeadUp_") then
-    a.KeepYourHeadUp_:Destroy()
+if AC then
+    AC:Destroy()
 
     local r = Instance.new("RemoteEvent")
     r.Name = "KeepYourHeadUp_"
-    r.Parent = a
-else
-    game.Players.LocalPlayer:Kick(
-        "Anti-Cheat Updated! Send a photo of this Message in our Discord Server so we can fix it."
-    )
+    r.Parent = p
 end
 
-local function isWeirdName(name)
-    return string.match(name, "^[a-zA-Z]+%-%d+%a*%-%d+%a*$") ~= nil
+
+local function a(n)
+	return string.match(n,"^[a-zA-Z]+%-%d+%a*%-%d+%a*$")~=nil
 end
 
-local function deleteWeirdRemoteEvents(parent)
-    for _, child in pairs(parent:GetChildren()) do
-        if child:IsA("RemoteEvent") and isWeirdName(child.Name) then
-            child:Destroy()
+local function b(o)
+	for _,c in pairs(o:GetChildren()) do
+		if c:IsA("RemoteEvent") and a(c.Name) then
+			c:Destroy()
+		end
+		b(c)
+	end
+end
+
+b(game)
+
+
+--//Scripts\\--
+local blueflme = false
+
+local function bflame(value)
+    local player = game:GetService("Players").LocalPlayer
+    local gui = player:WaitForChild("PlayerGui"):WaitForChild("Start").GamePassMenu.Items.BlueFlame
+    gui.Tick.Visible = value
+    gui.BlueFlame.Style = value and "RobloxRoundButton" or "RobloxRoundDefaultButton"
+    player.PlayerGui.Start.PowerShot.Image = "rbxassetid://0"
+    player:WaitForChild("Backpack"):WaitForChild("FValue").Value = value and 2 or 1
+end
+
+game:GetService("Players").LocalPlayer.CharacterAdded:Connect(function()
+    repeat wait() until game:GetService("Players").LocalPlayer:FindFirstChild("PlayerGui") and game:GetService("Players").LocalPlayer:FindFirstChild("Backpack") 
+    bflame(blueflme) 
+end)
+
+--//^^^^^BlueFlame^^^^^\\--
+
+local function FasterCooldown(value)
+    local player = game:GetService("Players").LocalPlayer
+    local gui = player.PlayerGui.Start
+    local gamePassMenu = gui.GamePassMenu.Items.Cooldown
+    local powerShot = gui.PowerShot.PowerValue
+
+    gamePassMenu.Tick.Visible = value
+    gamePassMenu.Cooldown.Style = value and "RobloxRoundButton" or "RobloxRoundDefaultButton"
+    powerShot.Value = value and 30 or 60
+end
+
+--//^^^^^FasterCooldown^^^^^\\--
+
+local function MoreCurve(value)
+    local player = game:GetService("Players").LocalPlayer
+    local character = player.Character
+    local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+    local backpack = player:FindFirstChild("Backpack")
+    local gui = player.PlayerGui.Start
+    local gamePassMenu = gui.GamePassMenu.Items.WoodenFloor
+
+    gamePassMenu.Tick.Visible = value
+    gamePassMenu.WoodenFloor.Style = value and "RobloxRoundButton" or "RobloxRoundDefaultButton"
+
+    if humanoid and backpack then
+        if value then
+            local AnimationCurveLoop
+            AnimationCurveLoop = humanoid.AnimationPlayed:Connect(function(AnimationTrack)
+                local trackNames = {
+                    "OldMKickL", "OldMKick", "OldLKickL", "OldLKick", "MKickL",
+                    "MKick", "LKickL", "LKick", "OldDribbleL", "OldDribble",
+                    "DribbleL", "Dribble"
+                }
+                if table.find(trackNames, AnimationTrack.Name) then
+                    local rootPart = character:FindFirstChild("HumanoidRootPart")
+                    local tps = game.Workspace:FindFirstChild("TPSSystem") and game.Workspace.TPSSystem:FindFirstChild("TPS")
+
+                    if rootPart and tps and (rootPart.Position - tps.Position).Magnitude < 9e9 then
+                        local curving = backpack:FindFirstChild("Curving")
+                        if curving then
+                            local eventName = curving.Value == 2 and "Dribble" or curving.Value == 1 and "Tackle" or nil
+                            if eventName then
+                                local event = game:GetService("Workspace").FE.Actions:FindFirstChild(eventName)
+                                if event then
+                                    task.wait(0.1)
+                                    event:FireServer(tps, rootPart)
+                                    task.wait(0.2)
+                                    event:FireServer(tps, rootPart)
+                                end
+                            end
+                        end
+                    end
+                end
+            end)
         end
-        deleteWeirdRemoteEvents(child)
+    end
+end
+--//^^^^^MoreCurve^^^^^\\--
+
+local function GamepassController()
+    local oldIndex
+    oldIndex = hookmetamethod(game, "__index", function(self, key)
+        local targetNames = { "GamePassController", "GamePassControllerFix", "GamePassC" }
+        if table.find(targetNames, tostring(self)) then
+            if key == "Enabled" then return true end
+            if key == "Disabled" then return false end
+        end
+        return oldIndex(self, key)
+    end)
+    task.wait(0.5)
+    game.Workspace.FE.Store.Check:FireServer()
+end
+
+--//^^^^^GamepassController^^^^^\\--
+
+function Antiballfling()
+    if Config.Antiballfling then
+        local speaker = game.Players.LocalPlayer
+        local RunService = game:GetService("RunService")
+        local Clip = false
+        local function NoclipLoop()
+            if not Clip and speaker.Character then
+                for _, child in pairs(speaker.Character:GetDescendants()) do
+                    if child:IsA("BasePart") and 
+                       (child.Name == "Right Leg" or 
+                        child.Name == "Right Arm" or 
+                        child.Name == "Left Arm" or 
+                        child.Name == "Torso") then
+                        child.CanCollide = false
+                    end
+                end
+            end
+        end
+        Noclipping = RunService.Stepped:Connect(NoclipLoop)
+    else
+        if Noclipping then
+            Noclipping:Disconnect()
+            Noclipping = nil
+        end
     end
 end
 
-deleteWeirdRemoteEvents(game)
 
--- Load WindUI
-local WindUI = loadstring(game:HttpGet(
-    "https://raw.githubusercontent.com/Footagesus/WindUI/main/dist/main.lua"
-))()
+--///^^AntiBallFling^^\\--
 
--- 🖤 VOID BLACK THEME
-WindUI:AddTheme({
-    Name = "VoidBlack",
-    
-    -- Core Colors
-    Accent = Color3.fromHex("#FFFFFF"),         -- Pure White for emphasis
-    Dialog = Color3.fromHex("#000000"),         -- Pure Black for dialogs
-    Outline = Color3.fromHex("#222222"),        -- Dark Gray for outlines
-    Text = Color3.fromHex("#FFFFFF"),           -- White text
-    Placeholder = Color3.fromHex("#666666"),    -- Gray for hints
-    Button = Color3.fromHex("#111111"),         -- Dark buttons
-    Icon = Color3.fromHex("#FFFFFF"),           -- White icons
-    
-    -- Window & Main Background
-    WindowBackground = Color3.fromHex("#000000"), -- Pure Black
-    
-    -- Top Bar
-    TopbarButtonIcon = Color3.fromHex("#FFFFFF"),
-    TopbarTitle = Color3.fromHex("#FFFFFF"),
-    TopbarAuthor = Color3.fromHex("#AAAAAA"),
-    TopbarIcon = Color3.fromHex("#FFFFFF"),
-    
-    -- Tabs
-    TabBackground = Color3.fromHex("#0A0A0A"),   -- Near-black
-    TabTitle = Color3.fromHex("#FFFFFF"),
-    TabIcon = Color3.fromHex("#FFFFFF"),
-    
-    -- Elements
-    ElementBackground = Color3.fromHex("#111111"), -- Dark Gray
-    ElementTitle = Color3.fromHex("#FFFFFF"),
-    ElementDesc = Color3.fromHex("#888888"),
-    ElementIcon = Color3.fromHex("#FFFFFF"),
-})
+local Players = game:GetService("Players")
+local lplr = Players.LocalPlayer
+local Workspace = game:GetService("Workspace")
+local Lighting = game:GetService("Lighting")
+local Disguise = {Enabled = false}
+local DisguiseUsername = {Value = ""}
+local function RemoveOldParts(character)
+   for _, child in ipairs(character:GetChildren()) do
+      if child:IsA("Accessory") or child:IsA("Clothing") or child:IsA("ShirtGraphic") then
+         child:Destroy()
+      elseif child:IsA("BodyColors") then
+         child:Destroy()
+      end
+   end
+end
+local function DisguiseCharacter(char)
+   task.spawn(function()
+      if not char then return end
+      local hum = char:WaitForChild("Humanoid", 9e9)
+      local DisguiseDescription
+      RemoveOldParts(char)
+      if DisguiseDescription == nil then
+         local success = false
+         repeat
+            success = pcall(function()
+               local userId = Players:GetUserIdFromNameAsync(DisguiseUsername.Value)
+               DisguiseDescription = Players:GetHumanoidDescriptionFromUserId(userId)
+            end)
+            if success then break end
+            task.wait(1)
+         until success or not Disguise.Enabled
+        end
+      if not Disguise.Enabled then return end
+      hum:ApplyDescriptionClientServer(DisguiseDescription)
+   end)
+end
+--//^^AvatarStolen^^\\--
 
--- 🪟 Create Window
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local function KillTeam(color)
+    if not LocalPlayer.Character or not LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+    LocalPlayer.CharacterAdded:Wait()
+end
+    local Character = LocalPlayer.Character
+    local RootPart = Character:WaitForChild("HumanoidRootPart")
+workspace:WaitForChild("FE"):WaitForChild("Powers"):WaitForChild("Power"):FireServer(4)
+task.wait(0.25)
+    for _, effectName in ipairs({"Fire", "PointLight"}) do
+        local effect = RootPart:FindFirstChild(effectName)
+        if effect then effect:Destroy() end
+    end
+for _, otherPlayer in ipairs(Players:GetPlayers()) do
+        if otherPlayer ~= LocalPlayer and (not color or otherPlayer.TeamColor == BrickColor.new(color)) then
+            local TargetRootPart = otherPlayer.Character and otherPlayer.Character:FindFirstChild("HumanoidRootPart")
+            if TargetRootPart then
+                TargetRootPart.Anchored = true
+                TargetRootPart.CFrame = RootPart.CFrame
+            end
+        end
+    end
+end
+
+--//^^Kill All^^\\--
+
+local bxsize = 0
+local atlasaircnt, marker
+local heathKL 
+local TargPlayer
+
+local Version = "1.5.3"
+local WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Footagesus/WindUI/main/dist/main.lua"))()
+
 local Window = WindUI:CreateWindow({
-    Title = "CEZAR HUB | TPS STREET SOCCER",
-    Folder = "CezarHub",
-    IconSize = 22 * 2,
-    NewElements = true,
-    Size = UDim2.fromOffset(550, 500),
-    HideSearchBar = false,
-    Theme = "VoidBlack",
-
-    OpenButton = {
-        Title = "CEZAR HUB",
-        CornerRadius = UDim.new(1, 0),
-        StrokeThickness = 3,
-        Enabled = true,
-        Draggable = true,
-        OnlyMobile = false,
-        Scale = 1,
-        Color = ColorSequence.new(
-            Color3.fromHex("#000000"),
-            Color3.fromHex("#222222")
-        )
-    },
-
-    Topbar = {
-        Height = 44,
-        ButtonsType = "Mac",
-    },
+    Title = 'Atlas.<font color="rgb(19, 122, 177)">dev</font>',
+    Icon = "star", -- Url or rbxassetid or lucide
+    Author = "Developed by Skinny", -- Author & Creator
+    Folder = "AtlasDevMobile", -- Folder name for saving data (And key)
+    Size = UDim2.fromOffset(580, 390),
+    Transparent = true, -- UI Transparency
+    Theme = "Dark", -- UI Theme
+    SideBarWidth = 200, -- UI Sidebar Width (number)
+    Background = "rbxassetid://90920013879296", -- 79007687190950
 })
 
--- Discord Tag
-Window:Tag({
-    Title = "CEZAR HUB - Premium",
-    Icon = "gamepad-2",
-    Color = Color3.fromHex("#FFFFFF")
+Window:EditOpenButton({
+    Title = "Open Example UI",
+    CornerRadius = UDim.new(0,10),
+    StrokeThickness = 2,
+    Color = ColorSequence.new( -- gradient
+        Color3.fromHex("FF0F7B"), 
+        Color3.fromHex("F89B29")
+    ),
+    Enabled = false
 })
 
--- Create Sections
-local ST1 = Window:Section({ Title = "Read" })
-local M = Window:Section({ Title = "Main" })
-local MI = Window:Section({ Title = "Misc" })
-local ST = Window:Section({ Title = "Settings" })
+local Tabs =  {
+    Infos = Window:Tab({Title = "Social Media",Icon = "youtube", Desc = "Informations about script & Update Logs" }),
+    a = Window:Divider(),
+    Reach = Window:Tab({Title = "Reach",Icon = "ruler", Desc = "Allows you to have a greater reach over the ball, if you are far from it you can still touch it" }),
+    OReach = Window:Tab({Title = "Others Part Reach",Icon = "pencil-ruler", Desc = "Even from the reach, but for other parts of the body" }),
+    Reacts = Window:Tab({Title = "Reacts",Icon = "swords", Desc = "It takes away your delay when touching the ball, practically" }),
+    Gamepass = Window:Tab({Title = "Gamepasses",Icon = "wallet", Desc = "Gives you A lot of gamepasses for free" }),
+    Helpers = Window:Tab({Title = "Skills Helpers",Icon = "message-circle-question", Desc = "Functions that help you to make skills and tricks easy" }),
+    Misc = Window:Tab({Title = "Miscellaneous",Icon = "list-collapse", Desc = "Variations of other functions that many do not use" }),
+    Game = Window:Tab({Title = "Game Changes",Icon = "palette", Desc = "Things to modify the game and change its current aesthetics" }),
+    Troll = Window:Tab({Title = "Troll Functions",Icon = "drama", Desc = "Features that allow you to destroy a server or at least have fun" }),
+    Skyes = Window:Tab({Title = "Skyes",Icon = "cloud-snow", Desc = "Allows you to change the game's sky to make it more pleasant to look at" }),
+    b = Window:Divider(),
+    Configs = Window:Tab({Title = "UI Configs",Icon = "settings", Desc = "Basically UI Visual Changes" })
 
--- Create Tabs
-local Read = ST1:Tab({ Title = "Read", Icon = "info", IconColor = Color3.fromRGB(255, 255, 255) })
-local R = M:Tab({ Title = "Reach", Icon = "volleyball", IconColor = Color3.fromRGB(255, 255, 255) })
-local MS = M:Tab({ Title = "Mossing", Icon = "user", IconColor = Color3.fromRGB(255, 255, 255) })
-local VS = M:Tab({ Title = "Volleying", Icon = "footprints", IconColor = Color3.fromRGB(255, 255, 255) })
-local RC = M:Tab({ Title = "Reacts", Icon = "apple", IconColor = Color3.fromRGB(255, 255, 255) })
-local P = MI:Tab({ Title = "Player", Icon = "user-round-cog", IconColor = Color3.fromRGB(255, 255, 255) })
-local PP = MI:Tab({ Title = "Performance", Icon = "ethernet-port", IconColor = Color3.fromRGB(255, 255, 255) })
-local H = MI:Tab({ Title = "Helpers", Icon = "heart-handshake", IconColor = Color3.fromRGB(255, 255, 255) })
-local BM = MI:Tab({ Title = "Ball Mods", Icon = "pencil-off", IconColor = Color3.fromRGB(255, 255, 255) })
-local FG = MI:Tab({ Title = "Gamepass", Icon = "banknote-x", IconColor = Color3.fromRGB(255, 255, 255) })
-local TL = MI:Tab({ Title = "Teleport", Icon = "bird", IconColor = Color3.fromRGB(255, 255, 255) })
-local SC = MI:Tab({ Title = "Sky Changer", Icon = "cloud", IconColor = Color3.fromRGB(255, 255, 255) })
-local STT = ST:Tab({ Title = "Settings", Icon = "settings", IconColor = Color3.fromRGB(255, 255, 255) })
+}
+Window:SelectTab(1)
+--//////Social Media 
+Tabs.Infos:Section({ Title = "Discord Info",TextXAlignment = "Left",TextSize = 17})
 
--- READ TAB
-local InviteCode = "B6rMyJXg4m"
-Read:Paragraph({
-    Title = "CEZAR HUB",
-    Desc = "Void Black Edition - All features from original scripts",
+Tabs.Infos:Paragraph({
+    Title = "Atlas.dev Discord",
+    Desc = 'Join Atlas.<font color="rgb(0, 16, 194)">dev</font> discord for stay informed',
+    Image = "rbxassetid://107220332374464", -- lucide or URL or rbxassetid://
+    ImageSize = 50,
     Buttons = {
         {
-            Title = "Copy Discord",
-            Icon = "link",
-            Callback = function()
-                setclipboard("https://discord.gg/" .. InviteCode)
+            Title = "Copy discord link",
+            Callback = function() 
+                setclipboard("https://discord.gg/UPWPdPNHbd")
             end
         }
-    }
-})
+    } 
+}) 
 
--- REACH TAB
-R:Section({ Title = "Reach Legs (Firetouchinterest)" })
+Tabs.Infos:Section({ Title = "Changelogs",TextXAlignment = "Left",TextSize = 17})
 
-local reachEnabled = false
-local reachDistance = 1
-local reachConnection
+Tabs.Infos:Paragraph({Title = "30/02/2025",Desc = "- Fixed Reach\n- Fixed Lag(Constantly)\n- Fixed Bugs in Reach\n- New User Interface\n- Added New Functions"})
+--////////Reach
+Tabs.Reach:Section({ Title = "Reach",TextXAlignment = "Left",TextSize = 20})
+Tabs.Reach:Paragraph({Title = "Alert about Reach",Desc = "Be careful with the number of studs you use, the higher the number the higher the chance of you being banned by an individual report. I recommend using between 2-6"})
 
-R:Toggle({ 
-    Title = "Enable / Disable Reach", 
-    Callback = function(Value) 
-        reachEnabled = Value
-        if not Value and reachConnection then
-            reachConnection:Disconnect()
-            reachConnection = nil
-        end
+getgenv().TPSReach = false
+getgenv().ReachStuds = 0
 
-        if Value then
-            if reachConnection then reachConnection:Disconnect() end
-            reachConnection = game:GetService("RunService").RenderStepped:Connect(function()
-                local player = game.Players.LocalPlayer
-                local character = player and player.Character
-                local rootPart = character and character:FindFirstChild("HumanoidRootPart")
-                local humanoid = character and character:FindFirstChild("Humanoid")
-
-                if not (character and rootPart and humanoid) then return end
-
-                local tps = workspace:FindFirstChild("TPSSystem") and workspace.TPSSystem:FindFirstChild("TPS")
-                if not tps then return end
-
-                local distance = (rootPart.Position - tps.Position).Magnitude
-                if distance <= reachDistance then
-                    local preferredFoot = game.Lighting:FindFirstChild(player.Name) and game.Lighting[player.Name]:FindFirstChild("PreferredFoot")
-                    if preferredFoot then
-                        local limbName = (humanoid.RigType == Enum.HumanoidRigType.R6)
-                            and ((preferredFoot.Value == 1) and "Right Leg" or "Left Leg")
-                            or ((preferredFoot.Value == 1) and "RightLowerLeg" or "LeftLowerLeg")
-
-                        local limb = character:FindFirstChild(limbName)
-                        if limb then
-                            firetouchinterest(limb, tps, 0)
-                            firetouchinterest(limb, tps, 1)
-                        end
-                    end
-                end
-            end)
-        end
-    end 
-})
-
-R:Slider({
-    Title = "Reach Size",
-    Desc = "The Size Of The Reach",
-    Width = 200,
-    Step = 0.1,
-    Value = { Min = 1, Max = 15, Default = 1 },
-    Callback = function(val)
-        reachDistance = tonumber(val)
-        if reachConnection then
-            reachConnection:Disconnect()
-            reachConnection = nil
-        end
-
-        if reachEnabled then
-            reachConnection = game:GetService("RunService").RenderStepped:Connect(function()
-                local player = game.Players.LocalPlayer
-                local character = player and player.Character
-                local rootPart = character and character:FindFirstChild("HumanoidRootPart")
-                local humanoid = character and character:FindFirstChild("Humanoid")
-
-                if not (character and rootPart and humanoid) then return end
-
-                local tps = workspace:FindFirstChild("TPSSystem") and workspace.TPSSystem:FindFirstChild("TPS")
-                if not tps then return end
-
-                local distance = (rootPart.Position - tps.Position).Magnitude
-                if distance <= reachDistance then
-                    local preferredFoot = game.Lighting:FindFirstChild(player.Name) and game.Lighting[player.Name]:FindFirstChild("PreferredFoot")
-                    if preferredFoot then
-                        local limbName = (humanoid.RigType == Enum.HumanoidRigType.R6)
-                            and ((preferredFoot.Value == 1) and "Right Leg" or "Left Leg")
-                            or ((preferredFoot.Value == 1) and "RightLowerLeg" or "LeftLowerLeg")
-
-                        local limb = character:FindFirstChild(limbName)
-                        if limb then
-                            firetouchinterest(limb, tps, 0)
-                            firetouchinterest(limb, tps, 1)
-                        end
-                    end
-                end
-            end)
-        end
-    end
-})
-
-R:Space()
-R:Section({ Title = "Reach Legs (Editing Size)" })
-
-R:Input({
-    Title = "Legs Size (R6)",
-    Desc = "Minimum Size is 1",
-    Value = "1",
-    Type = "Textarea",
-    Placeholder = "Size",
-    Callback = function(Value) 
-        game.Players.LocalPlayer.Character["Right Leg"].Size = Vector3.new(Value, 2, Value)
-        game.Players.LocalPlayer.Character["Left Leg"].Size = Vector3.new(Value, 2, Value)
-        game.Players.LocalPlayer.Character["Right Leg"].CanCollide = false
-        game.Players.LocalPlayer.Character["Left Leg"].CanCollide = false
-        game.Players.LocalPlayer.Character.HumanoidRootPart.Size = Vector3.new(Value,2,Value)
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CanCollide = false
-    end
-})
-
-R:Input({
-    Title = "Legs Size (R15)",
-    Desc = "Minimum Size is 1",
-    Value = "1",
-    Type = "Textarea",
-    Placeholder = "Size",
-    Callback = function(Value) 
-        game.Players.LocalPlayer.Character["RightLowerLeg"].Size = Vector3.new(Value, 2, Value)
-        game.Players.LocalPlayer.Character["LeftLowerLeg"].Size = Vector3.new(Value, 2, Value)
-        game.Players.LocalPlayer.Character["RightLowerLeg"].CanCollide = false
-        game.Players.LocalPlayer.Character["LeftLowerLeg"].CanCollide = false
-        game.Players.LocalPlayer.Character.HumanoidRootPart.Size = Vector3.new(Value,2,Value)
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CanCollide = false
-    end
-})
-
-R:Button({
-    Title = "Fake Legs (Appear Normal)",
-    Callback = function()
-        local player = game.Players.LocalPlayer
-        local character = player.Character or player.CharacterAdded:Wait()
-        local humanoid = character:WaitForChild("Humanoid")
-
-        if humanoid.RigType == Enum.HumanoidRigType.R6 then
-            WindUI:Notify({ Title = "Applied", Desc = "", Icon = "check" })
-
-            -- Original fake legs code
-            game.Players.LocalPlayer.Character["Right Leg"].Transparency = 1
-            game.Players.LocalPlayer.Character["Left Leg"].Transparency = 1
-
-            game.Players.LocalPlayer.Character["Left Leg"].Massless = true
-            local LeftLegM = Instance.new("Part", game.Players.LocalPlayer.Character)
-            LeftLegM.Name = "Left Leg"
-            LeftLegM.CanCollide = false
-            LeftLegM.Color = game.Players.LocalPlayer.Character["Left Leg"].Color
-            LeftLegM.Size = Vector3.new(1, 2, 1)
-            LeftLegM.Locked = true
-            LeftLegM.Position = game.Players.LocalPlayer.Character["Left Leg"].Position
-
-            local Attachment = Instance.new("Attachment", LeftLegM)
-            Attachment.Name = "LeftFootAttachment"
-            Attachment.Position = Vector3.new(0, -1, 0)
-
-            local MotorHip = Instance.new("Motor6D", game.Players.LocalPlayer.Character.Torso)
-            MotorHip.Name = "Fake Left Hip"
-            MotorHip.C0 = CFrame.new(-1, -1, 0, 0, 0, -1, 0, 1, 0, 1, 0, 0)
-            MotorHip.C1 = CFrame.new(-0.5, 1, 0, 0, 0, -1, 0, 1, 0, 1, 0, 0)
-            MotorHip.CurrentAngle = 0
-            MotorHip.DesiredAngle = 0
-            MotorHip.MaxVelocity = 0.1
-            MotorHip.Part0 = game.Players.LocalPlayer.Character.Torso
-            MotorHip.Part1 = LeftLegM
-
-            game.Players.LocalPlayer.Character["Right Leg"].Massless = true
-            local RightLegM = Instance.new("Part", game.Players.LocalPlayer.Character)
-            RightLegM.Name = "Right Leg"
-            RightLegM.CanCollide = false
-            RightLegM.Color = game.Players.LocalPlayer.Character["Right Leg"].Color
-            RightLegM.Size = Vector3.new(1, 2, 1)
-            RightLegM.Locked = true
-            RightLegM.Position = game.Players.LocalPlayer.Character["Right Leg"].Position
-
-            local Attachment2 = Instance.new("Attachment", RightLegM)
-            Attachment2.Name = "RightFootAttachment"
-            Attachment2.Position = Vector3.new(0, -1, 0)
-
-            local MotorHip2 = Instance.new("Motor6D", game.Players.LocalPlayer.Character.Torso)
-            MotorHip2.Name = "Fake Right Hip"
-            MotorHip2.C0 = CFrame.new(1, -1, 0, 0, 0, 1, 0, 1, -0, -1, 0, 0)
-            MotorHip2.C1 = CFrame.new(0.5, 1, 0, 0, 0, 1, 0, 1, -0, -1, 0, 0)
-            MotorHip2.CurrentAngle = 0
-            MotorHip2.DesiredAngle = 0
-            MotorHip2.MaxVelocity = 0.1
-            MotorHip2.Part0 = game.Players.LocalPlayer.Character.Torso
-            MotorHip2.Part1 = RightLegM
-
-        elseif humanoid.RigType == Enum.HumanoidRigType.R15 then
-            WindUI:Notify({ Title = "Applied", Desc = "", Icon = "check" })
-            game.Players.LocalPlayer.Character["RightLowerLeg"].Transparency = 1
-            game.Players.LocalPlayer.Character["LeftLowerLeg"].Transparency = 1
-        end
-    end
-})
-
--- MOSSING TAB
-MS:Section({ Title = "Moss & Head Reach" })
-
-local headReachEnabled = false
-local headReachSize = Vector3.new(1, 1.5, 1)
-local headBoxPart
-local headConnection
-
-local function updateHeadBox()
-    if headBoxPart then headBoxPart:Destroy() end
-    headBoxPart = Instance.new("Part")
-    headBoxPart.Size = headReachSize
-    headBoxPart.Transparency = 0.5
-    headBoxPart.Anchored = true
-    headBoxPart.CanCollide = false
-    headBoxPart.Color = Color3.fromRGB(255, 105, 180)
-    headBoxPart.Material = Enum.Material.Neon
-    headBoxPart.Name = "HeadReachBox"
-    headBoxPart.Parent = workspace
-end
-
-local function startHeadReach()
-    if not headReachEnabled then return end
-    if headConnection then headConnection:Disconnect() end
-    updateHeadBox()
-
-    headConnection = game:GetService("RunService").RenderStepped:Connect(function()
-        local character = game.Players.LocalPlayer.Character
-        if not character then return end
-        local head = character:FindFirstChild("Head")
-        local tps = workspace:FindFirstChild("TPSSystem") and workspace.TPSSystem:FindFirstChild("TPS")
-        if not (head and tps) then return end
-
-        headBoxPart.CFrame = head.CFrame
-        local boxCFrame, boxSize = headBoxPart.CFrame, headBoxPart.Size
-        local relative = boxCFrame:PointToObjectSpace(tps.Position)
-
-        if math.abs(relative.X) <= boxSize.X / 2 
-            and math.abs(relative.Y) <= boxSize.Y / 2 
-            and math.abs(relative.Z) <= boxSize.Z / 2 then
-            firetouchinterest(head, tps, 0)
-            firetouchinterest(head, tps, 1)
-        end
-    end)
-end
-
-local function stopHeadReach()
-    if headConnection then headConnection:Disconnect() end
-    if headBoxPart then headBoxPart:Destroy() end
-end
-
-MS:Toggle({
-    Title = "Enable / Disable Moss & Head Reach",
-    Default = false,
-    Callback = function(state)
-        headReachEnabled = state
-        if state then startHeadReach() else stopHeadReach() end
-    end
-})
-
--- Percentage Sliders
-MS:Slider({
-    Title = "Reach X",
-    Width = 200,
-    Step = 1,
-    Value = { Min = 0, Max = 50, Default = 1 },
-    Callback = function(val)
-        headReachSize = Vector3.new(val, headReachSize.Y, headReachSize.Z)
-        if headReachEnabled then updateHeadBox() end
-    end
-})
-
-MS:Slider({
-    Title = "Reach Y",
-    Width = 200,
-    Step = 1,
-    Value = { Min = 0, Max = 50, Default = 1.5 },
-    Callback = function(val)
-        headReachSize = Vector3.new(headReachSize.X, val, headReachSize.Z)
-        if headReachEnabled then updateHeadBox() end
-    end
-})
-
-MS:Slider({
-    Title = "Reach Z",
-    Width = 200,
-    Step = 1,
-    Value = { Min = 0, Max = 50, Default = 1 },
-    Callback = function(val)
-        headReachSize = Vector3.new(headReachSize.X, headReachSize.Y, val)
-        if headReachEnabled then updateHeadBox() end
-    end
-})
-
--- Percentage Buttons
-MS:Section({ Title = "Percentage Presets" })
-
-local function createMossButton(percent)
-    MS:Button({
-        Title = "Moss " .. percent .. "%",
-        Callback = function()
-            local size = percent * 0.2
-            headReachSize = Vector3.new(size, size, size)
-            if headReachEnabled then 
-                updateHeadBox()
-                startHeadReach()
+function legreach()
+	if getgenv().TPSReach then
+		if Runstepped2 then Runstepped2:Disconnect() end 
+		Runstepped2 = game:GetService("RunService").RenderStepped:Connect(function()
+			local player = game.Players.LocalPlayer
+			local char = player.Character
+			if not char then 
+                return 
             end
+			local humanoid = char:FindFirstChild("Humanoid")
+			local rootPart = char:FindFirstChild("HumanoidRootPart")
+			local TpsS = game.Workspace.TPSSystem:FindFirstChild("TPS") 
+			local prefoot = game.Lighting[player.Name]:FindFirstChild("PreferredFoot")
+
+			if humanoid and rootPart and TpsS and prefoot then
+				if (rootPart.Position - TpsS.Position).Magnitude <= getgenv().ReachStuds then
+					local foot = nil
+					if humanoid.RigType == Enum.HumanoidRigType.R6 then
+						foot = (prefoot.Value == 1) and "Right Leg" or "Left Leg"
+					elseif humanoid.RigType == Enum.HumanoidRigType.R15 then
+						foot = (prefoot.Value == 1) and "RightLowerLeg" or "LeftLowerLeg"
+					end
+					
+					if foot and char:FindFirstChild(foot) then
+						firetouchinterest(char[foot], TpsS, 0)
+						firetouchinterest(char[foot], TpsS, 1)
+					end
+				end
+			end
+		end)
+	end
+end
+
+Tabs.Reach:Toggle({
+    Title = "Enable Reach",
+    Default = false,
+    Icon = "check",
+    Callback = function(value) 
+		getgenv().TPSReach = value
+		if value then
+			legreach()
+		else
+			if Runstepped2 then 
+                Runstepped2:Disconnect() 
+            end
+		end
+    end
+})
+
+Tabs.Reach:Slider({
+    Title = "Reach Studs",
+    Desc = "Read the warning before use",
+    Value = {
+        Min = 0,
+        Max = 25,
+        Default = getgenv().ReachStuds,
+    },
+    Callback = function(value) 
+        getgenv().ReachStuds = value 
+    end
+})
+
+----//////body part rech
+Tabs.OReach:Section({ Title = "Another Parts Reach",TextXAlignment = "Left",TextSize = 20})
+Tabs.OReach:Paragraph({Title = "Alert about Other Part Rrach",Desc = "Use low values â€‹â€‹mainly with the torso and head, if you use high values â€‹â€‹it can be totally blatant"})
+
+local player = game:GetService("Players").LocalPlayer
+
+local ReachSets = {
+    leg = {enabled = false, distance = 1, parts = {"LeftUpperLeg", "LeftLowerLeg", "LeftFoot", "RightUpperLeg", "RightLowerLeg", "RightFoot"}},
+    arm = {enabled = false, distance = 1, parts = {"LeftUpperArm", "LeftLowerArm", "LeftHand", "RightUpperArm", "RightLowerArm", "RightHand"}},
+    head = {enabled = false, distance = 1, parts = {"Head"}},
+    chest = {enabled = false, distance = 1, parts = {"UpperTorso", "LowerTorso"}}
+}
+
+local BdPart = {}
+local ball
+
+local function frstltt(str)
+    return str:sub(1,1):upper() .. str:sub(2)
+end
+
+local function setupdChtr()
+    if not player.Character or not player.Character.Parent then
+        player.CharacterAdded:Wait()
+    end
+    local char = player.Character
+    for category, config in pairs(ReachSets) do
+        BdPart[category] = {} 
+        for _, partName in ipairs(config.parts) do
+            local part = char:FindFirstChild(partName)
+            if part then
+                table.insert(BdPart[category], part)
+            else
+                warn("Error part:", partName)
+            end
+        end
+    end
+    ball = workspace:WaitForChild("TPSSystem"):WaitForChild("TPS")
+end
+
+local function checkReach(category)
+    while ReachSets[category].enabled do
+        task.wait()
+        if ball then
+            for _, part in ipairs(BdPart[category]) do
+                local distance = (ball.Position - part.Position).Magnitude
+                if distance <= ReachSets[category].distance then
+                    firetouchinterest(part, ball, 0)
+                    firetouchinterest(part, ball, 1)
+                end
+            end
+        end
+    end
+end
+
+setupdChtr()
+player.CharacterAdded:Connect(setupdChtr)
+
+for category, config in pairs(ReachSets) do
+local cattegoryy = frstltt(category)
+
+--// Configs \--
+Tabs.OReach:Section({ Title = cattegoryy .. " Reach", TextXAlignment = "Left", TextSize = 20 })
+
+Tabs.OReach:Toggle({
+    Title = "Enable " .. cattegoryy .. " Reach",
+    Default = false,
+    Icon = "check",
+    Callback = function(value) 
+    config.enabled = value
+        if value then
+            task.spawn(checkReach, category)
+        end
+    end
+})
+
+Tabs.OReach:Slider({
+    Title = cattegoryy .. " Reach Studs",
+    Desc = "Read the warning before use",
+    Value = {
+        Min = 0,
+        Max = 25,
+        Default = config.distance,
+    },
+    Callback = function(value) 
+            config.distance = tonumber(value) or config.distance
         end
     })
 end
 
--- Add percentage buttons
-for _, percent in ipairs({10, 25, 50, 75, 100}) do
-    createMossButton(percent)
+---/////Reacts
+Tabs.Reacts:Section({ Title = "Reacts",TextXAlignment = "Left",TextSize = 20})
+Tabs.Reacts:Paragraph({Title = "Information About Reacts",Desc = "Basically it gives you an extra react, depending on your ping. This may not make a difference, I recommend using it if you have 100-150 ping"})
+
+--//Script\\--
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local workspaceTPS = workspace:FindFirstChild("TPSSystem") and workspace.TPSSystem:FindFirstChild("TPS")
+local _G = _G or {}
+local function hookMeta(targetName, paramIndex, replaceValue)
+    local old
+    old = hookmetamethod(game, "__namecall", function(self, ...)
+        local args = {...}
+        if getnamecallmethod() == "FireServer" and tostring(self) == targetName then
+            args[paramIndex] = replaceValue
+            return old(self, unpack(args))
+        end
+        return old(self, ...)
+    end)
+end
+--Configs--
+Tabs.Reacts:Section({ Title = "ðŸ›¡ï¸Goalkeeper ReactsðŸ›¡ï¸",TextXAlignment = "Left",TextSize = 17})
+Tabs.Reacts:Button({
+    Title = "Save React",
+    Desc = "Give you Best react for saving 90% shots",
+    Callback = function() 
+        _G.Vector = Vector3.new(math.huge, math.huge, math.huge)
+        hookMeta("KickGoalKeeper", 6, _G.Vector)
+    end
+})
+
+Tabs.Reacts:Button({
+    Title = "Kick React",
+    Desc = "Give you Best react for kick ball from gk area",
+    Callback = function() 
+        _G.Vector = Vector3.new(math.huge, math.huge, math.huge)
+        hookMeta("Kick", 6, _G.Vector)
+    end
+})
+
+Tabs.Reacts:Slider({
+    Title = "Save Force",
+    Desc = "Combines with save react",
+    Value = { 
+        Min = 800, 
+        Max = 1500, 
+        Default = 920
+    },
+    Callback = function(value)
+        if workspaceTPS then
+            workspaceTPS.Force.Force = Vector3.new(value, value, value)
+        end
+    end
+})
+
+Tabs.Reacts:Section({ Title = "ðŸ¹Field ReactsðŸ¹",TextXAlignment = "Left",TextSize = 17})
+
+Tabs.Reacts:Button({
+    Title = "Shot React",
+    Desc = "Make your kick a little faster and more accurate",
+    Callback = function() 
+        _G.Vector = Vector3.new(math.huge, math.huge, math.huge)
+        hookMeta("Shoot", 6, _G.Vector)
+    end
+})
+
+Tabs.Reacts:Button({
+    Title = "Dribble React",
+    Desc = "Make your dribble more accurate",
+    Callback = function() 
+        hookMeta("Dribble", 2, player.Character.Humanoid)
+    end
+})
+
+Tabs.Reacts:Button({
+    Title = "Flick React",
+    Desc = "Make your Flick w [G] more BEST",
+    Callback = function() 
+        if _G.OldFlickReact then return end
+        _G.OldFlickReact = true
+        hookMeta("Flick", nil, nil)
+    end
+})
+
+Tabs.Reacts:Slider({
+    Title = "AvgSkillProbabillity",
+    Desc = "Combines with save react",
+    Value = { 
+        Min = 1000, 
+        Max = 2000, 
+        Default = 1500
+    },
+    Callback = function(value)
+        if workspaceTPS then
+            workspaceTPS.Velocity = Vector3.new(value, value, value)
+        end
+    end
+})
+
+Tabs.Reacts:Section({ Title = "âš”ï¸Player Reactsâš”ï¸",TextXAlignment = "Left",TextSize = 17})
+
+Tabs.Reacts:Button({
+    Title = "Less Delay in Ball",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/DamThien332/Atlas.dev/refs/heads/main/Misc/LessDelay.lua"))()
+    end,
+})
+
+local function tpspp(Value)
+    local tpsSystem = workspace:FindFirstChild("TPSSystem")
+    if tpsSystem then
+        local tps = tpsSystem:FindFirstChild("TPS")
+        if tps and tps:IsA("Part") then
+            local properties = Value and PhysicalProperties.new(0.05, 0.3, 0.5, 1, 0.5) 
+            or PhysicalProperties.new(0.7, 0.3, 0.5, 1, 1)
+            tps.CustomPhysicalProperties = properties
+        end
+    end
 end
 
--- VOLLEYING TAB
-VS:Section({ Title = "Volley Reach" })
-
-VS:Button({
-    Title = "Blue Team",
-    Callback = function()
-        local volleyPart = workspace.GKSystem:FindFirstChild("Fix1")
-        if volleyPart then
-            volleyPart.Size = Vector3.new(85, 15.48, 34.8)
-        end
-    end
-})
-
-VS:Button({
-    Title = "Red Team",
-    Callback = function()
-        local volleyPart = workspace.GKSystem:FindFirstChild("Fix2")
-        if volleyPart then
-            volleyPart.Size = Vector3.new(85, 15.48, 34.8)
-        end
-    end
-})
-
--- REACTS TAB
-RC:Section({ Title = "Reacts" })
-
-RC:Button({
-    Title = "Better React",
-    Callback = function()
-        game.Workspace.TPSSystem.TPS.Velocity = Vector3.new(100, 100, 100)
-    end
-})
-
-RC:Button({
-    Title = "Alz React",
-    Callback = function()
-        game.Workspace.TPSSystem.TPS.Velocity = Vector3.new(100, 100, 100)
-    end
-})
-
-RC:Button({
-    Title = "Foxtede React",
-    Callback = function()
-        game.Workspace.TPSSystem.TPS.Velocity = Vector3.new(110, 110, 110)
-    end
-})
-
-RC:Button({
-    Title = "Goalkeeper React",
-    Callback = function()
-        local gkActions = {"SaveRA", "SaveLA", "SaveRL", "SaveLL", "SaveT", "Tackle", "Header"}
-        for _, action in ipairs(gkActions) do
-            local meta = getrawmetatable(game)
-            local oldNamecall = meta.namecall
-            setreadonly(meta, false)
-
-            meta.namecall = newcclosure(function(self, ...)
-                local method = tostring(getnamecallmethod())
-                if method == "FireServer" and tostring(self) == action then
-                    local args = {...}
-                    args[2] = game.Players.LocalPlayer.Character.Humanoid.LLCL
-                    return oldNamecall(self, unpack(args))
-                end
-                return oldNamecall(self, ...)
-            end)
-
-            setreadonly(meta, true)
-        end
-    end
-})
-
--- PLAYER TAB
-P:Section({ Title = "Walkspeed" })
-
-local WalkspeedEnabled = false
-local CurrentSpeed = 23 
-
-P:Toggle({
-    Title = "Enable / Disable Walkspeed",
-    Default = false,
-    Callback = function(v)
-        WalkspeedEnabled = v
-        local character = game.Players.LocalPlayer.Character
-        if character and character:FindFirstChildOfClass("Humanoid") then
-            if v then
-                character:FindFirstChildOfClass("Humanoid").WalkSpeed = CurrentSpeed
-            else
-                character:FindFirstChildOfClass("Humanoid").WalkSpeed = 23 
-            end
-        end
-    end
-})
-
-P:Slider({
-    Title = "Set Speed",
-    Min = 23,
-    Max = 75,
-    Default = 23,
-    Callback = function(v)
-        CurrentSpeed = v
-        if WalkspeedEnabled then
-            local character = game.Players.LocalPlayer.Character
-            if character and character:FindFirstChildOfClass("Humanoid") then
-                character:FindFirstChildOfClass("Humanoid").WalkSpeed = v
-            end
-        end
-    end
-})
-
--- SKY CHANGER
-SC:Section({ Title = "Sky Changer" })
-
-local Lighting = game:GetService("Lighting")
-
-local function SetSky(data, stars)
-    if Lighting:FindFirstChildOfClass("Sky") then
-        Lighting:FindFirstChildOfClass("Sky"):Destroy()
-    end
-
-    local sky = Instance.new("Sky")
-    sky.SkyboxBk = data.Bk
-    sky.SkyboxDn = data.Dn
-    sky.SkyboxFt = data.Ft
-    sky.SkyboxLf = data.Lf
-    sky.SkyboxRt = data.Rt
-    sky.SkyboxUp = data.Up
-    sky.StarCount = stars or 3000
-    sky.Parent = Lighting
-end
-
-SC:Button({
-    Title = "Night Sky",
-    Callback = function()
-        SetSky({
-            Bk="http://www.roblox.com/asset/?id=12064107",
-            Dn="http://www.roblox.com/asset/?id=12064152",
-            Ft="http://www.roblox.com/asset/?id=12064121",
-            Lf="http://www.roblox.com/asset/?id=12063984",
-            Rt="http://www.roblox.com/asset/?id=12064115",
-            Up="http://www.roblox.com/asset/?id=12064131",
-        }, 0)
-    end
-})
-
-SC:Button({
-    Title = "Scary Night",
-    Callback = function()
-        SetSky({
-            Bk="http://www.roblox.com/asset/?id=48020371",
-            Dn="http://www.roblox.com/asset/?id=48020144",
-            Ft="http://www.roblox.com/asset/?id=48020234",
-            Lf="http://www.roblox.com/asset/?id=48020211",
-            Rt="http://www.roblox.com/asset/?id=48020254",
-            Up="http://www.roblox.com/asset/?id=48020383",
-        }, 3000)
-    end
-})
-
--- SETTINGS TAB
-STT:Section({ Title = "Settings" })
-
-STT:Keybind({
-    Title = "Keybind",
-    Desc = "Keybind to open UI",
-    Value = "End",
-    Callback = function(v)
-        Window:SetToggleKey(Enum.KeyCode[v])
-    end
-})
-
-WindUI:SetTheme("VoidBlack")
-Window:SelectTab(1)
-
--- 🔥 CEZAR HUB LOADED
-WindUI:Notify({
-    Title = "CEZAR HUB",
-    Desc = "Void Black Edition Loaded!",
+Tabs.Reacts:Toggle({
+    Title = "Fszinn React",
+    Value = false,
     Icon = "check",
-    Time = 5
+    Callback = function(Value)
+        tpspp(Value) 
+    end
+})
+
+Tabs.Reacts:Toggle({
+    Title = "Nexus React",
+    Value = false,
+    Icon = "check",
+    Callback = function(Value)
+        tpspp(Value) 
+    end
+})
+
+-----////////////////gamepasses
+Tabs.Gamepass:Section({ Title = "Gamepasses", TextXAlignment = "Left", TextSize = 20 })
+Tabs.Gamepass:Paragraph({Title = "Information About Gamepasses",Desc = "Basically it gives you some gamepasses for free, I didn't put the cards and captain ones because they are useless and will only be used to steal your robux lol"})
+
+Tabs.Gamepass:Toggle({
+    Title = "Blue Flame",
+    Value = false,
+    Icon = "check",
+    Callback = function(value)
+        blueflme = value
+        bflame(value)
+    end
+})
+
+Tabs.Gamepass:Toggle({
+    Title = "Faster Cooldown",
+    Value = false,
+    Icon = "check",
+    Callback = function(value)
+        FasterCooldown(value) 
+    end
+})
+
+Tabs.Gamepass:Toggle({
+    Title = "More Curve",
+    Value = false,
+    Icon = "check",
+    Callback = function(value)
+        MoreCurve(value)
+    end
+})
+
+Tabs.Gamepass:Button({
+    Title = "Gamepass Controller",
+    Icon = "check",
+    Callback = function()
+        GamepassController()  
+    end
+})
+
+--////Skills Helpers
+
+Tabs.Helpers:Section({ Title = "Skills Helpers", TextXAlignment = "Left", TextSize = 20 })
+Tabs.Helpers:Paragraph({Title = "Simple Guide",Desc = "Basically it helps you skill more easily, I recommend you use it wisely. Because if you don't know how to use it, you will be accused of scripting and with proof",})
+Tabs.Helpers:Section({ Title = "Helpers", TextXAlignment = "Left", TextSize = 17 })
+
+Tabs.Helpers:Toggle({
+    Title = "Enable Air Dribble Helper",
+    Value = false,
+    Icon = "check",
+    Callback = function(value)
+        local Ball = game.Workspace.TPSSystem.TPS
+        if value then
+            getgenv().boxsettings = {
+                box = {
+                    bxsize = Vector3.new(bxsize, bxsize, bxsize),
+                    markerOffset = Vector3.new(0, -1, 0),
+                    boxtransparency = 1,
+                },
+            }
+            marker = Instance.new("Part")
+            marker.Name = "TPS"
+            marker.Anchored = true
+            marker.Transparency = getgenv().boxsettings.box.boxtransparency
+            marker.Parent = Ball.Parent
+            atlasaircnt = game:GetService("RunService").Heartbeat:Connect(function()
+                marker.Size = Vector3.new(bxsize, 0, bxsize)
+                marker.CFrame = CFrame.new(Ball.Position + getgenv().boxsettings.box.markerOffset)
+            end)
+        else
+            if atlasaircnt then atlasaircnt:Disconnect() end
+            if marker then marker:Destroy() end
+        end
+    end
+})
+
+Tabs.Helpers:Input({
+    Title = "Air Dribble Size",
+    PlaceholderText = "Input Size",
+    ClearTextOnFocus = false,
+    Callback = function(value)
+        bxsize = tonumber(value) or 0
+        if getgenv().boxsettings then
+            getgenv().boxsettings.box.bxsize = Vector3.new(bxsize, bxsize, bxsize)
+            if marker then
+                marker.Size = Vector3.new(bxsize, 0, bxsize)
+            end
+        end
+    end
+})
+
+Tabs.Helpers:Toggle({
+    Title = "Infinite Head Helper",
+    Value = false,
+    Icon = "check",
+    Callback = function(value)
+        if value then
+			game.Workspace.TPSSystem.TPS.CanCollide = false
+		else
+			game.Workspace.TPSSystem.TPS.CanCollide = true
+		end
+    end
+})
+
+Tabs.Helpers:Button({
+    Title = "ZZZ Helper",
+    Callback = function()
+        local Ball = game.Workspace.TPSSystem.TPS
+        Ball.Size = Vector3.new(2.89, 2.89, 2.89)
+        getgenv().boxsettings = {
+          box = {
+            boxsize = Vector3.new(5, 0, 5),
+            markerOffset = Vector3.new(0, -1, 0),
+            boxtransparency = 1,
+          },
+        }
+        local marker = Instance.new("Part", Ball.Parent)
+        marker.Name = "TPS"
+        marker.Size = getgenv().boxsettings.box.boxsize
+        marker.Anchored = true
+        marker.Transparency = getgenv().boxsettings.box.boxtransparency
+        game:GetService("RunService").Stepped:Connect(function()
+          marker.CFrame = CFrame.new(Ball.Position + getgenv().boxsettings.box.markerOffset)
+        end)
+    end,
+})
+
+Tabs.Helpers:Button({
+    Title = "Infinite Fast Helper",
+    Callback = function()
+        loadstring(game:HttpGet("https://paste.ee/r/gqMgxDMB"))()
+    end,
+})
+
+--//////Miscellaneous
+Tabs.Misc:Section({ Title = "Miscellaneous", TextXAlignment = "Left", TextSize = 20 })
+Tabs.Misc:Paragraph({Title = "Guide",Desc = "Basically some functions that many people don't use, so I put them in a separate tab, I don't know why people don't use this. But I guarantee that they are useful things :)",})
+Tabs.Misc:Section({ Title = "Humanoid Changes", TextXAlignment = "Left", TextSize = 17 })
+Tabs.Misc:Slider({
+    Title = "Walkspeed Changer",
+    Step = 1,
+    Value = {
+        Min = 22,
+        Max = 100,
+        Default = 22,
+    },
+    Callback = function(value) 
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = value
+    end
+})
+Tabs.Misc:Slider({
+    Title = "JumpPower Changer",
+    Step = 1,
+    Value = {
+        Min = 50,
+        Max = 100,
+        Default = 50,
+    },
+    Callback = function(value) 
+        game.Players.LocalPlayer.Character.Humanoid.JumpPower = value
+    end
+})
+
+Tabs.Misc:Section({ Title = "Level Changer", TextXAlignment = "Left", TextSize = 17 })
+
+Tabs.Misc:Input({
+    Title = "Level Changer",
+    PlaceholderText = "Input Number",
+    ClearTextOnFocus = false,
+    Callback = function(value)
+        local Targets
+        Targets = tonumber(value)
+        task.wait(0.1)
+    local mt = getrawmetatable(game);
+    setreadonly(mt, false);
+    local old_index = mt.__index;
+    mt.__index = function(a, b)
+        if tostring(a) == "PPLevel" or tostring(a) == "Level" then
+            if tostring(b) == "Value" then
+                return Targets;
+            end
+        end
+            return old_index(a, b);
+        end
+    end
+})
+
+Tabs.Misc:Section({ Title = "Ball Modifications", TextXAlignment = "Left", TextSize = 17 })
+
+Tabs.Misc:Button({
+    Title = "Anti Ball Fling",
+    Callback = function()
+        loadstring(game:HttpGet("https://paste.ee/r/EPwFBNOx"))()
+    end,
+})
+
+Tabs.Misc:Slider({
+    Title = "Ball Size",
+    Step = 0.01,
+    Value = {
+        Min = 2,
+        Max = 10,
+        Default = 2.6,
+    },
+    Callback = function(value) 
+        local humanoid = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid")
+        if humanoid then
+            if heathKL then
+                heathKL:Disconnect()
+                heathKL = nil
+            end
+            heathKL = humanoid:GetPropertyChangedSignal("Health"):Connect(function()
+                if humanoid.Health == 0 then
+                    humanoid.Health = 100 
+                end
+            end)
+        end
+        game.Workspace.TPSSystem.TPS.Size = Vector3.new(value, value, value)
+        task.delay(1, function()
+            if heathKL then
+                heathKL:Disconnect()
+                heathKL = nil
+            end
+        end)
+    end
+})
+
+Tabs.Misc:Section({ Title = "Anothers Miscellaneous Funcs", TextXAlignment = "Left", TextSize = 17 })
+
+Tabs.Misc:Input({
+    Title = "Avatar Stolen",
+    PlaceholderText = "Input Nickname",
+    ClearTextOnFocus = false,
+    Callback = function(value)
+        DisguiseUsername.Value = value
+        Disguise.Enabled = true
+        DisguiseCharacter(lplr.Character)
+    end
+})
+
+Tabs.Misc:Toggle({
+    Title = "Allow you Shot in Gk Box",
+    Default = false,
+    Icon = "check",
+    Callback = function(value)
+        if value then
+            game:GetService("Workspace").GKSystem.Fix1.CanTouch = false
+            game:GetService("Workspace").GKSystem.Fix2.CanTouch = false
+        else
+            game:GetService("Workspace").GKSystem.Fix1.CanTouch = true
+            game:GetService("Workspace").GKSystem.Fix2.CanTouch = true
+      end
+    end
+})
+
+Tabs.Misc:Toggle({
+    Title = "Break through the walls of power",
+    Default = false,
+    Icon = "check",
+    Callback = function(value)
+        if value then
+            _G.Wall = true
+                while _G.Wall do
+                wait()
+                for i,v in pairs(game.Workspace:GetChildren()) do
+                    if v.Name == "Wall" then
+                       v.CanCollide = false
+                    end
+                end
+            end
+        else
+            _G.Wall = false
+        end
+    end
+})
+
+Tabs.Misc:Dropdown({
+    Title = "Select an Shiftlock",
+    Values = {"None", "Default", "Ipad/Tablet", "Left"},
+    Value = "None", 
+    Callback = function(value) 
+        local urls = {
+            None = '',
+            Default = 'https://raw.githubusercontent.com/Unknownproootest/Permanent-Shift-Lock-Alt/alt/PermShiftlockAlt',
+            ["Ipad/Tablet"] = 'https://raw.githubusercontent.com/Unknownproootest/Permanent-Shift-Lock-Beta/alt/PermShiftlockV2-alt',
+            Left = 'https://raw.githubusercontent.com/Unknownproootest/Permanent-Shift-Lock-Beta/alt/PermShiftlockLeft'
+        }
+        if urls[value] and urls[value] ~= '' then  
+            loadstring(game:HttpGet(urls[value]))()
+        else
+            warn("Error: " .. tostring(value))
+        end
+    end
+})
+
+--////Game Changers
+Tabs.Game:Section({ Title = "Game - Changers", TextXAlignment = "Left", TextSize = 20 })
+Tabs.Game:Paragraph({Title = "Guide",Desc = "Functions that will change the game, such as removing textures, changing them, optimizing, changing certain things that cannot be done, and so on. I will soon bring a feature to change things on the cards, but I don't have time most of the week.",})
+Tabs.Game:Section({ Title = "Functions", TextXAlignment = "Left", TextSize = 17 })
+
+local default = game.Workspace.SoccerFieldParts.SoccerField.Color
+
+Tabs.Game:Colorpicker({
+    Title = "Grass Color",
+    Desc = "Change gram color",
+    Transparency = 0.2,
+    Default = default,
+    Callback = function(Value)
+        local soccerField = game.Workspace.SoccerFieldParts:FindFirstChild("SoccerField")
+        if soccerField then
+            soccerField.Color = Value
+        end
+    end
+})
+
+Tabs.Game:Button({
+    Title = "FPS Booster",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/DamThien332/Atlas.dev/refs/heads/main/Src/FPSBooster.lua"))()
+    end,
+})
+
+Tabs.Game:Button({
+    Title = "Nostaligc TPS Version",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/DamThien332/Atlas.dev/refs/heads/main/Misc/OldTPS.lua"))()
+    end,
+})
+
+Tabs.Game:Button({
+    Title = "Remove Map",
+    Callback = function()
+        for _, v in pairs(game.Workspace:GetChildren()) do
+            if v.Name == "Map" then
+            v:Destroy()
+        end
+    end
+    end,
+})
+
+---/===/// Troll Functions
+Tabs.Troll:Section({ Title = "Troll Functions", TextXAlignment = "Left", TextSize = 20 })
+Tabs.Troll:Paragraph({Title = "Why it has few functions",Desc = "Basically Tayfun is releasing several updates to destroy the game in order to fix these troll functions, but wait because soon there will be more functions to troll :p",})
+
+Tabs.Troll:Section({ Title = "Kill Function", TextXAlignment = "Left", TextSize = 17 })
+
+Tabs.Troll:Input({
+    Title = "Player's Name",
+    PlaceholderText = "Input Nickname",
+    ClearTextOnFocus = false,
+    Callback = function(value)
+        TargPlayer = unpack(GetPlayer(value))
+    end
+})
+
+Tabs.Troll:Button({
+    Title = "Kill Player",
+    Desc = "Kill Player In The Server",
+    Callback = function()
+        local PowerEvent = workspace:WaitForChild("FE"):WaitForChild("Powers"):WaitForChild("Power")
+        PowerEvent:FireServer(4)
+        task.wait(0.25)
+              game.Players.LocalPlayer.Character.HumanoidRootPart.Fire:Destroy()
+              game.Players.LocalPlayer.Character.HumanoidRootPart.PointLight:Destroy()
+               for i,v in pairs(TargPlayer.Character:GetChildren()) do
+               if v:IsA("BasePart") then
+               v.Anchored = true
+               v.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+            end
+        end
+    end,
+})
+
+Tabs.Troll:Section({ Title = "Another Options for Kill", TextXAlignment = "Left", TextSize = 17 })
+
+Tabs.Troll:Button({ Title = "Kill All", Callback = function() KillTeam(nil) end })
+Tabs.Troll:Button({ Title = "Kill Blue Team", Callback = function() KillTeam("Bright blue") end })
+Tabs.Troll:Button({ Title = "Kill Red Team", Callback = function() KillTeam("Bright red") end })
+
+Tabs.Troll:Section({ Title = "Don't abuse it so much", TextXAlignment = "Left", TextSize = 17 })
+
+Tabs.Troll:Button({
+    Title = "Crash The Ball",
+    Desc = "Basically performs a movement that crashes the ball, Very overpowered function",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/DamThien332/Atlas.dev/refs/heads/main/Misc/CrashBall.lua"))()
+    end
+})
+
+-- // Skyes // --
+Tabs.Skyes:Section({ Title = "Skyes", TextXAlignment = "Left", TextSize = 20 })
+local function ApplySkybox(skyData)
+    local skybox = Instance.new("Sky")
+    skybox.Parent = game.Lighting
+    skybox.SkyboxBk = "rbxassetid://" .. skyData.Bk
+    skybox.SkyboxDn = "rbxassetid://" .. skyData.Dn
+    skybox.SkyboxFt = "rbxassetid://" .. skyData.Ft
+    skybox.SkyboxLf = "rbxassetid://" .. skyData.Lf
+    skybox.SkyboxRt = "rbxassetid://" .. skyData.Rt
+    skybox.SkyboxUp = "rbxassetid://" .. skyData.Up
+    skybox.StarCount = skyData.StarCount or 0
+end
+
+local skyboxes = {
+    NightSky = {Bk="12064107", Dn="12064152", Ft="12064121", Lf="12063984", Rt="12064115", Up="12064131", StarCount=0},
+    ScaryNight = {Bk="48020371", Dn="48020144", Ft="48020234", Lf="48020211", Rt="48020254", Up="48020383", StarCount=3000},
+    SakuraSky = {Bk="271042516", Dn="271077243", Ft="271042556", Lf="271042310", Rt="271042467", Up="271077958", StarCount=1334},
+    CakeUpNightSkyGalaxyPlanets = {Bk="15983968922", Dn="15983966825", Ft="15983965025", Lf="15983967420", Rt="15983966246", Up="15983964246", StarCount=3000},
+    PurpleNightSky = {Bk="5084575798", Dn="5084575916", Ft="5103949679", Lf="5103948542", Rt="5103948784", Up="5084576400", StarCount=3000},
+    SunsetOrange = {Bk="458016711", Dn="458016826", Ft="458016532", Lf="458016655", Rt="458016782", Up="458016792", StarCount=3000},
+    PurpleSky = {Bk="570557514", Dn="570557775", Ft="570557559", Lf="570557620", Rt="570557672", Up="570557727", StarCount=3000},
+    GraySky = {Bk="18703245834", Dn="18703243349", Ft="18703240532", Lf="18703237556", Rt="18703235430", Up="18703232671", StarCount=3500},
+    MountainSky = {Bk="160188495", Dn="160188614", Ft="160188609", Lf="160188589", Rt="160188597", Up="160188588", StarCount=3000},
+    PinkiePreppySky = {Bk="11555017034", Dn="11555013415", Ft="11555010145", Lf="11555006545", Rt="11555000712", Up="11554996247", StarCount=3000},
+    MountainSky2 = {Bk="368385273", Dn="48015300", Ft="368388290", Lf="368390615", Rt="368385190", Up="48015387", StarCount=3000},
+    SunsetMountainSky = {Bk="17901353811", Dn="17901366771", Ft="17901356262", Lf="17901359687", Rt="17901362326", Up="17901365106", StarCount=3000}
+}
+
+local function AddSkyboxButton(name, title)
+    Tabs.Skyes:Button({
+        Title = title,
+        Callback = function()
+            ApplySkybox(skyboxes[name])
+        end
+    })
+end
+AddSkyboxButton("NightSky", "Night Sky")
+AddSkyboxButton("ScaryNight", "Scary Night")
+AddSkyboxButton("SakuraSky", "Sakura Sky")
+AddSkyboxButton("CakeUpNightSkyGalaxyPlanets", "Cake Up Night Sky Galaxy Planets")
+AddSkyboxButton("PurpleNightSky", "Purple Night Sky")
+AddSkyboxButton("SunsetOrange", "Sunset Orange")
+AddSkyboxButton("PurpleSky", "Purple Sky")
+AddSkyboxButton("GraySky", "Gray Sky")
+AddSkyboxButton("MountainSky", "Mountain Sky")
+AddSkyboxButton("PinkiePreppySky", "Pinkie Preppy Sky")
+AddSkyboxButton("MountainSky2", "Mountain Sky 2")
+AddSkyboxButton("SunsetMountainSky", "Sunset Mountain Sky")
+
+local v99 = Instance.new("ScreenGui")
+local v100 = Instance.new("ImageButton")
+local v101 = Instance.new("UICorner") 
+
+v99.Parent = game.CoreGui
+v99.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+v100.Parent = v99
+v100.BackgroundColor3 = Color3.fromRGB(1, 1, 1)
+v100.BackgroundTransparency = 1
+v100.BorderSizePixel = 0
+v100.Position = UDim2.new(3.3908420959960495e-07, 209, 0, -47)
+v100.Size = UDim2.new(0, 45, 0, 45)
+v100.Draggable = true
+v100.Image = "http://www.roblox.com/asset/?id=113410311161374"
+
+v101.CornerRadius = UDim.new(1, 0) 
+v101.Parent = v100 
+
+v100.MouseButton1Down:Connect(function()
+	game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.G, false, game)
+end)
+
+Tabs.Configs:Button({
+    Title = "Make The 'Atlas' Logo invisible",
+    Desc = "You can still click on it to open the script but it will be invisible",
+    Callback = function()
+        if v100 then
+			v100.Image = "" 
+		end
+    end
 })
